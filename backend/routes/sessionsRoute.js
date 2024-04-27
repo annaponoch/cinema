@@ -1,103 +1,125 @@
 import express from 'express';
-import { Movie } from '../models/movieModel.js';
+import { Session } from '../models/sessionModel.js';
 
-const moviesRoute = express.Router();
+const sessionsRoute = express.Router();
 
-moviesRoute.post('/', async (request, response)=> {
+sessionsRoute.post('/', async (request, response)=> {
     try {
         if (
-            !request.body.title||
-            !request.body.format||
-            !request.body.image_URL||
-            !request.body.description||
-            !request.body.director            
+            !request.body.movie_id||
+            !request.body.date_time||
+            !request.body.price          
         ) {
             return response.status(400).send({
                 message: 'Not all fields are filled'
             });
         }
-        const newMovie = {
-            title: request.body.title,
-            format: request.body.format,
-            image_URL: request.body.image_URL,
-            description: request.body.description,
-            director: request.body.director            
+        const newSession = {
+          movie_id: request.body.movie_id,
+          date_time: request.body.date_time,
+          price: request.body.price,
+          11: '',
+          12: '',
+          13: '',
+          14: '',
+          15: '',
+          21: '',
+          22: '',
+          23: '',
+          24: '',
+          25: '',
+          31: '',
+          32: '',
+          33: '',
+          34: '',
+          35: '',
+          41: '',
+          42: '',
+          43: '',
+          44: '',
+          45: '',
+          51: '',
+          52: '',
+          53: '',
+          54: '',
+          55: ''
+                   
         };
-        const movie = await Movie.create(newMovie);
-        return response.status(201).send(movie);
+        const session = await Session.create(newSession);
+        return response.status(201).send(session);
     } catch (error) {
         console.log(error.message);
         response.status().send({message: error.message});
     }
  });
 
- moviesRoute.get('/', async (request, response)=> {
+ sessionsRoute.get('/', async (request, response)=> {
     try {
-        const movie = await Movie.find({});
-        return response.status(200).json(movie);
+        const session = await Session.find({});
+        return response.status(200).json(session);
     } catch (error) {
         console.log(error.message);
         response.status().send({message: error.message});
     }
  });
 
- moviesRoute.get('/:id', async (request, response) => {
+ sessionsRoute.get('/:id', async (request, response) => {
     try {
       const { id } = request.params;
   
-      const movie = await Movie.findById(id);
+      const session = await Session.findById(id);
   
-      return response.status(200).json(movie);
+      return response.status(200).json(session);
     } catch (error) {
       console.log(error.message);
       response.status(500).send({ message: error.message });
     }
   });
 
-  moviesRoute.put('/:id', async (request, response) => {
+  sessionsRoute.put('/:id', async (request, response) => {
     try {
-      if (
-        !request.body.title||
-        !request.body.format||
-        !request.body.image_URL||
-        !request.body.description||
-        !request.body.director  
-      ) {
-        return response.status(400).send({
-          message: 'Send all required fields: title, author, publishYear',
-        });
-      }
+      // if (
+      //   !request.body.title||
+      //   !request.body.format||
+      //   !request.body.image_URL||
+      //   !request.body.description||
+      //   !request.body.director  
+      // ) {
+      //   return response.status(400).send({
+      //     message: 'Send all required fields: title, author, publishYear',
+      //   });
+      // }
   
       const { id } = request.params;
   
-      const result = await Movie.findByIdAndUpdate(id, request.body);
+      const result = await Session.findByIdAndUpdate(id, request.body);
   
       if (!result) {
-        return response.status(404).json({ message: 'Movie not found' });
+        return response.status(404).json({ message: 'Session not found' });
       }
   
-      return response.status(200).send({ message: 'Movie updated successfully' });
+      return response.status(200).send({ message: 'Session updated successfully' });
     } catch (error) {
       console.log(error.message);
       response.status(500).send({ message: error.message });
     }
   });
 
-moviesRoute.delete('/:id', async (request, response) => {
+sessionsRoute.delete('/:id', async (request, response) => {
     try {
       const { id } = request.params;
   
-      const result = await Movie.findByIdAndDelete(id);
+      const result = await Session.findByIdAndDelete(id);
   
       if (!result) {
-        return response.status(404).json({ message: 'Movie not found' });
+        return response.status(404).json({ message: 'Session not found' });
       }
   
-      return response.status(200).send({ message: 'Movie deleted successfully' });
+      return response.status(200).send({ message: 'Session deleted successfully' });
     } catch (error) {
       console.log(error.message);
       response.status(500).send({ message: error.message });
     }
   });
 
- export default moviesRoute;
+ export default sessionsRoute;
