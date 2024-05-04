@@ -19,7 +19,7 @@ app.get('/', (request, response) => {
   });
 
 
-app.use('/books', booksRoute);
+// app.use('/books', booksRoute);
 app.use('/movie', moviesRoute);
 app.use('/user', usersRoute);
 app.use('/session', sessionsRoute);

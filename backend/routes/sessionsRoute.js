@@ -14,35 +14,18 @@ sessionsRoute.post('/', async (request, response)=> {
                 message: 'Not all fields are filled'
             });
         }
+        const seatsArray = JSON.stringify([
+          ['free', 'free', 'free', 'free', 'free'],
+          ['free', 'free', 'free', 'free', 'free'],
+          ['free', 'free', 'free', 'free', 'free'],
+          ['free', 'free', 'free', 'free', 'free'],
+          ['free', 'free', 'free', 'free', 'free']
+        ]);
         const newSession = {
           movie_id: request.body.movie_id,
           date_time: request.body.date_time,
           price: request.body.price,
-          11: '',
-          12: '',
-          13: '',
-          14: '',
-          15: '',
-          21: '',
-          22: '',
-          23: '',
-          24: '',
-          25: '',
-          31: '',
-          32: '',
-          33: '',
-          34: '',
-          35: '',
-          41: '',
-          42: '',
-          43: '',
-          44: '',
-          45: '',
-          51: '',
-          52: '',
-          53: '',
-          54: '',
-          55: ''
+          seats: seatsArray
                    
         };
         const session = await Session.create(newSession);
@@ -63,6 +46,63 @@ sessionsRoute.post('/', async (request, response)=> {
     }
  });
 
+//  sessionsRoute.get('/filter/:movieId/:selectedDate', async (req, res) => {
+//   try {
+//     const { movieId, selectedDate } = req.params;
+//     const sessions = await Session.aggregate([
+//       {
+//         $match: {
+//           movie_id: movieId,
+//           date_time: {
+//             $gte: new Date(selectedDate),
+//             $lt: new Date(new Date(selectedDate).setDate(new Date(selectedDate).getDate() + 1))
+//           }
+//         }
+//       }
+//     ]);
+//     res.json(sessions);
+//   } catch (error) {
+//     console.error('Error fetching sessions:', error);
+//     res.status(500).json({ message: 'Error fetching sessions' });
+//   }
+// });
+
+sessionsRoute.get('/movie/:movieId/:selectedDate', async (req, res) => {
+  try {
+    const { movieId, selectedDate } = req.params;
+    const startDate = new Date(selectedDate);
+    const endDate = new Date(selectedDate + 'T23:59:59.999Z');
+    const sessions = await Session.find({ 
+      movie_id: movieId, 
+      date_time: { $gte: startDate, $lt: endDate } 
+    });
+    res.json(sessions);
+  } catch (error) {
+    console.error('Error fetching sessions:', error);
+    res.status(500).json({ message: 'Error fetching sessions' });
+  }
+});
+
+
+
+sessionsRoute.get('/date/:selectedDate', async (req, res) => {
+  try {
+    const { selectedDate } = req.params;
+    const sessions = await Session.aggregate([
+      {
+        $match: {
+          date_time: { $gte: new Date(selectedDate), $lt: new Date(selectedDate + 'T23:59:59.999Z') }
+        }
+      }
+    ]);
+    res.json(sessions);
+  } catch (error) {
+    console.error('Error fetching sessions:', error);
+    res.status(500).json({ message: 'Error fetching sessions' });
+  }
+});
+
+
  sessionsRoute.get('/:id', async (request, response) => {
     try {
       const { id } = request.params;
@@ -78,17 +118,6 @@ sessionsRoute.post('/', async (request, response)=> {
 
   sessionsRoute.put('/:id', async (request, response) => {
     try {
-      // if (
-      //   !request.body.title||
-      //   !request.body.format||
-      //   !request.body.image_URL||
-      //   !request.body.description||
-      //   !request.body.director  
-      // ) {
-      //   return response.status(400).send({
-      //     message: 'Send all required fields: title, author, publishYear',
-      //   });
-      // }
   
       const { id } = request.params;
   

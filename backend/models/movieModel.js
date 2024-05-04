@@ -6,6 +6,10 @@ const movieSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    movie_id: {
+      type: Number,
+      required: true,
+    },
     format: {
       type: String,
       required: true,

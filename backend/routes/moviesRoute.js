@@ -3,33 +3,73 @@ import { Movie } from '../models/movieModel.js';
 
 const moviesRoute = express.Router();
 
-moviesRoute.post('/', async (request, response)=> {
-    try {
-        if (
-            !request.body.title||
-            !request.body.format||
-            !request.body.image_URL||
-            !request.body.description||
-            !request.body.director            
-        ) {
-            return response.status(400).send({
-                message: 'Not all fields are filled'
-            });
-        }
-        const newMovie = {
-            title: request.body.title,
-            format: request.body.format,
-            image_URL: request.body.image_URL,
-            description: request.body.description,
-            director: request.body.director            
-        };
-        const movie = await Movie.create(newMovie);
-        return response.status(201).send(movie);
-    } catch (error) {
-        console.log(error.message);
-        response.status().send({message: error.message});
-    }
- });
+
+moviesRoute.post('/', async (request, response) => {
+  try {
+      if (
+          !request.body.title ||
+          !request.body.format ||
+          !request.body.image_URL ||
+          !request.body.description ||
+          !request.body.director
+      ) {
+          return response.status(400).send({
+              message: 'Not all fields are filled'
+          });
+      }
+
+      // Знайдемо максимальний movie_id в базі
+      const maxMovieId = await Movie.find().sort({ movie_id: -1 }).limit(1);
+
+      // Якщо є записи, збільшимо максимальний movie_id на 1, інакше почнемо з 1
+      const newMovieId = maxMovieId.length ? maxMovieId[0].movie_id + 1 : 1;
+
+      const newMovie = {
+          movie_id: newMovieId,
+          title: request.body.title,
+          format: request.body.format,
+          image_URL: request.body.image_URL,
+          description: request.body.description,
+          director: request.body.director
+      };
+
+      const movie = await Movie.create(newMovie);
+      return response.status(201).send(movie);
+  } catch (error) {
+      console.log(error.message);
+      response.status().send({ message: error.message });
+  }
+});
+
+
+
+// moviesRoute.post('/', async (request, response)=> {
+//     try {
+//         if (
+//             !request.body.title||
+//             !request.body.format||
+//             !request.body.image_URL||
+//             !request.body.description||
+//             !request.body.director            
+//         ) {
+//             return response.status(400).send({
+//                 message: 'Not all fields are filled'
+//             });
+//         }
+//         const newMovie = {
+//             title: request.body.title,
+//             format: request.body.format,
+//             image_URL: request.body.image_URL,
+//             description: request.body.description,
+//             director: request.body.director            
+//         };
+//         const movie = await Movie.create(newMovie);
+//         return response.status(201).send(movie);
+//     } catch (error) {
+//         console.log(error.message);
+//         response.status().send({message: error.message});
+//     }
+//  });
 
  moviesRoute.get('/', async (request, response)=> {
     try {
@@ -40,6 +80,20 @@ moviesRoute.post('/', async (request, response)=> {
         response.status().send({message: error.message});
     }
  });
+
+ moviesRoute.get('/movie_id/:movieId', async (request, response) => {
+  try {
+      const { movieId } = request.params;
+      const movie = await Movie.findOne({ movie_id: movieId });
+      if (!movie) {
+          return response.status(404).json({ message: 'Movie not found' });
+      }
+      return response.status(200).json(movie);
+  } catch (error) {
+      console.error('Error fetching movie:', error);
+      response.status(500).json({ message: 'Error fetching movie' });
+  }
+});
 
  moviesRoute.get('/:id', async (request, response) => {
     try {
@@ -64,7 +118,7 @@ moviesRoute.post('/', async (request, response)=> {
         !request.body.director  
       ) {
         return response.status(400).send({
-          message: 'Send all required fields: title, author, publishYear',
+          message: 'Send all required fields',
         });
       }
   
