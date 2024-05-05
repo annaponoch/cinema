@@ -1,28 +1,32 @@
-.seat-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 10px; /* Відстань між рядками */
-  }
-  
-  .seat-row {
-    display: flex;
-    gap: 10px; /* Відстань між місцями */
-  }
-  
-  .seat {
-    width: 50px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid black;
-  }
-  
-  .seat-free {
-    background-color: green;
-  }
-  
-  .seat-occupied {
-    background-color: red;
-  }
-  
+.seat {
+  width: 50px;
+  height: 50px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer; /* Додаємо курсор вказівника для вільних місць */
+}
+
+.seat-free {
+  background-color: green;
+  color: white;
+}
+
+.seat-occupied {
+  background-color: red;
+  color: white;
+}
+
+.seat-selected {
+  background-color: #66CCFF; /* Додаємо колір для обраних місць */
+  color: white;
+}
+
+.seat.selected {
+  background-color: gray; /* Сірий колір для обраних місць */
+}
+
+.seat:disabled {
+  cursor: not-allowed; /* Зміна курсора для зайнятих місць */
+}

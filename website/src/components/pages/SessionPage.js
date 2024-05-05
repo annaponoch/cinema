@@ -54,10 +54,9 @@ function SessionPage() {
           </li>
         ))}
       </ul>
-      {selectedSession && <SeatPopup seats={JSON.parse(selectedSession.seats[0])} />}
+      {selectedSession && <SeatPopup seats={JSON.parse(selectedSession.seats[0])} price={selectedSession.price} />}
       <Footer/>
     </div>
-    
   );
 }
 
