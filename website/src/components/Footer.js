@@ -34,7 +34,7 @@ function Footer() {
               <i class='fa-solid fa-star' />
             </Link>
           </div>
-          <small class='website-rights'>Зіронька © 2023</small>
+          <small class='website-rights'>Зіронька © 2024</small>
           <div class='social-icons'>
             <Link
               class='social-icon-link facebook'

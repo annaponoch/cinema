@@ -60,6 +60,34 @@ usersRoute.post('/', async (request, response) => {
     }
   });
 
+  usersRoute.post('/login', async (request, response) => {
+    try {
+      const { email, password } = request.body;
+  
+      // Знаходимо користувача за його електронною поштою
+      const user = await User.findOne({ email });
+  
+      if (!user) {
+        return response.status(404).json({ message: 'User not found' });
+      }
+  
+      // Перевіряємо, чи співпадає пароль користувача з переданим паролем
+      const isPasswordMatch = password === user.password;
+  
+      if (!isPasswordMatch) {
+        return response.status(401).json({ message: 'Incorrect password' });
+      }
+  
+      // Якщо користувача знайдено і пароль співпадає, повертаємо його дані
+      return response.status(200).json(user);
+    } catch (error) {
+      console.log(error.message);
+      response.status(500).send({ message: error.message });
+    }
+  });
+
+
+
   usersRoute.put('/:id', async (request, response) => {
     try {
       if (

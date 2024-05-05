@@ -1,20 +1,13 @@
 import React from 'react';
-import './SeatPopup.css'; // Підключаємо CSS для стилізації
+import { useNavigate } from 'react-router-dom';
+import './SeatPopup.css';
 
-function SeatPopup({ seats, price }) {
-  // Створення стану для зберігання обраних місць
+function SeatPopup({ seats, price, sessionId, movieId }) {
   const [selectedSeats, setSelectedSeats] = React.useState([]);
+  const navigate = useNavigate();
 
-  // Перевірка, чи є дані про місця
-  if (!seats || seats.length === 0) {
-    return <div>No seats data available</div>;
-  }
-
-  // Функція для вибору місця
   const handleSeatClick = (rowIndex, seatIndex) => {
-    // Перевіряємо, чи місце вже було обране
     const isSelected = selectedSeats.some(seat => seat.rowIndex === rowIndex && seat.seatIndex === seatIndex);
-    // Якщо місце вже було обране, видаляємо його, інакше додаємо до обраних
     if (isSelected) {
       setSelectedSeats(selectedSeats.filter(seat => !(seat.rowIndex === rowIndex && seat.seatIndex === seatIndex)));
     } else {
@@ -22,37 +15,40 @@ function SeatPopup({ seats, price }) {
     }
   };
 
-  // Обрахунок загальної ціни обраних місць
   const totalPrice = selectedSeats.length * price;
 
-  // Функція для оплати
   const handlePayment = () => {
-    // Операції для оплати, наприклад, відправлення запиту на сервер
-    console.log('Payment completed!');
+    const selectedSeatsString = JSON.stringify(selectedSeats);
+    // Перенаправлення на сторінку /pay разом з параметрами через URL
+    navigate(`/pay?seats=${selectedSeatsString}&totalPrice=${totalPrice}&sessionId=${sessionId}&movieId=${movieId}`);
   };
-
+ 
   return (
     <div className='seat-grid'>
-      {/* Відображення кнопок для кожного місця */}
       {seats.map((row, rowIndex) => (
         <div key={rowIndex} className='seat-row'>
+          {`${rowIndex + 1}`}
           {row.map((status, seatIndex) => (
             <button
               key={seatIndex}
               className={`seat ${status === 'free' ? 'seat-free' : 'seat-occupied'} ${selectedSeats.some(seat => seat.rowIndex === rowIndex && seat.seatIndex === seatIndex) ? 'seat-selected' : ''}`}
-              onClick={() => handleSeatClick(rowIndex, seatIndex)} // Додаємо обробник натискання
-              disabled={status === 'occupied'} // Забороняємо вибір вже зайнятих місць
+              onClick={() => handleSeatClick(rowIndex, seatIndex)} 
+              disabled={status === 'occupied'} 
             >
-              {status === 'free' ? 'Free' : 'Occupied'}
+              {`${seatIndex + 1}`}
             </button>
           ))}
         </div>
       ))}
-      {/* Кнопка оплати та відображення ціни */}
       {selectedSeats.length > 0 && (
         <div className="payment-section">
-          <button onClick={handlePayment}>Оплатити</button>
           <p>Загальна вартість: {totalPrice} грн</p>
+          <p>Обрані місця: 
+            {selectedSeats.map((seat, index) => (
+              <span key={index}>{`(${seat.rowIndex+1}, ${seat.seatIndex+1})`}</span>
+            ))}
+          </p>
+          <button onClick={handlePayment}>Купити квитки</button>
         </div>
       )}
     </div>

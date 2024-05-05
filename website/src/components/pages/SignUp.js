@@ -7,15 +7,7 @@ import Form from 'react-bootstrap/Form';
 export default function SignUp() {
   return(
     <>
-    <h1 className='sign-up'>ПІДТРИМАТИ</h1>;
-    <div className='about_page_container'> 
-      <h1>Реквізити фонду для підтримки</h1>
-      <h4 ><br></br>Одержувач: Сергій Притула<br></br>
-IBAN: UA843052990000026200681993072<br></br>
-ІПН: 2975800618<br></br>
-Призначення платежу: Благодійний безповоротний внесок <br></br><br></br>
-      </h4>
-    </div>
+    <h1 className='sign-up'>ЗАРЕЄСТРУВАТИСЬ</h1>;
     <br></br>
     <div className='about_page_container'> 
       <h1>Приєднатись до організації</h1>

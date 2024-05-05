@@ -1,11 +1,12 @@
 import './App.css';
 import Navbar from './components/Navbar';
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Виправлено імпорт
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; 
 import Home from './components/pages/Home';
 import About from './components/pages/About';
 import SignUp from './components/pages/SignUp';
-import SessionPage from './components/pages/SessionPage'; // Додано імпорт
+import SessionPage from './components/pages/SessionPage'; 
+import PayForTicket from './components/pages/PayForTicket';
 
 function App() {
   console.log('Running');
@@ -13,12 +14,13 @@ function App() {
     <>
       <Router>
         <Navbar />
-        <Routes> {/* Виправлено тег на Routes */}
-          <Route path='/' element={<Home />} /> {/* Виправлено синтаксис */}
+        <Routes> 
+          <Route path='/' element={<Home />} /> 
           <Route path='/About' element={<About />} />
           <Route path='/sign-up' element={<SignUp />} />
+          <Route path='/pay' element={<PayForTicket />} />
           <Route path='/session/:movieId/:date' element={<SessionPage />} />
-        </Routes> {/* Виправлено закриваючий тег */}
+        </Routes>
       </Router>
     </>
   );
