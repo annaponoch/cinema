@@ -2,10 +2,11 @@ import express, { request, response } from 'express';
 import { PORT, mongoDBURL } from './config.js';
 import mongoose from 'mongoose';
 // import {Book} from './models/bookModel.js'
-import booksRoute from './routes/booksRoute.js';
+// import booksRoute from './routes/booksRoute.js';
 import moviesRoute from './routes/moviesRoute.js';
 import usersRoute from './routes/usersRoute.js';
 import sessionsRoute from './routes/sessionsRoute.js';
+import transactionsRoute from './routes/transactionsRoute.js';
 import cors from 'cors';
 
 const app = express();
@@ -23,6 +24,7 @@ app.get('/', (request, response) => {
 app.use('/movie', moviesRoute);
 app.use('/user', usersRoute);
 app.use('/session', sessionsRoute);
+app.use('/transaction', transactionsRoute);
 
   mongoose
   .connect(mongoDBURL)

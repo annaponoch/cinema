@@ -1,0 +1,10 @@
+.user_h2_container {
+    background-color: #060515;
+    width: 100%; /* Робить контейнер розтягнутим по ширині */
+    text-align: center; /* Вирівнює текст по центру */
+  }
+  
+  .user_h2_container h3 {
+    color: white; /* Встановлює білий колір для тексту h2 */
+  }
+  
