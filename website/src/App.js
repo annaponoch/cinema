@@ -7,6 +7,7 @@ import About from './components/pages/About';
 import SignUp from './components/pages/SignUp';
 import SessionPage from './components/pages/SessionPage'; 
 import PayForTicket from './components/pages/PayForTicket';
+import Ticket from './components/pages/Ticket.js'
 
 function App() {
   console.log('Running');
@@ -19,6 +20,7 @@ function App() {
           <Route path='/About' element={<About />} />
           <Route path='/sign-up' element={<SignUp />} />
           <Route path='/pay' element={<PayForTicket />} />
+          <Route path='/ticket' element={<Ticket />} />
           <Route path='/session/:movieId/:date' element={<SessionPage />} />
         </Routes>
       </Router>

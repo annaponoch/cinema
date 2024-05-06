@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import SeatPopup from '../SeatPopup';
+import SeatPopup from '../tickets_and_payments/SeatPopup';
 import Footer from '../Footer';
 import Modal from 'react-bootstrap/Modal';
 

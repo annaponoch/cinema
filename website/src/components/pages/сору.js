@@ -4,7 +4,7 @@ import axios from 'axios';
 import '../../App.css';
 import Footer from '../Footer';
 import { useLocation } from 'react-router-dom';
-import UserForm from '../UserForm';
+import UserForm from '../tickets_and_payments/UserForm';
 
 function PayForTicket() {
   const location = useLocation();
