@@ -134,6 +134,38 @@ sessionsRoute.get('/date/:selectedDate', async (req, res) => {
     }
   });
 
+
+  sessionsRoute.put('/seats/:id', async (request, response) => {
+    try {
+      const { id } = request.params;
+      const { seats } = request.body;
+  
+      // Отримання існуючого запису сеансу
+      const session = await Session.findById(id);
+  
+      if (!session) {
+        return response.status(404).json({ message: 'Session not found' });
+      }
+  
+      // Отримання масиву місць з існуючого запису сеансу
+      let currentSeats = JSON.parse(session.seats);
+  
+      // Зміна стану місць за вказаними індексами
+      seats.forEach(seat => {
+        const { rowIndex, seatIndex } = seat;
+        currentSeats[rowIndex][seatIndex] = 'occupied';
+      });
+  
+      // Оновлення запису сеансу з оновленим масивом місць
+      await Session.findByIdAndUpdate(id, { seats: JSON.stringify(currentSeats) });
+  
+      return response.status(200).json({ message: 'Session updated successfully' });
+    } catch (error) {
+      console.log(error.message);
+      response.status(500).json({ message: error.message });
+    }
+  });
+
 sessionsRoute.delete('/:id', async (request, response) => {
     try {
       const { id } = request.params;

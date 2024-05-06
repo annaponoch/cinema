@@ -11,6 +11,7 @@ function TicketInfo({ movieId, sessionId, loggedInUser, seats, price }) {
   const [showModal, setShowModal] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('cash');
   const navigate = useNavigate();
+  console.log('seats:', seats);
 
   useEffect(() => {
     axios.get(`http://localhost:5555/movie/movie_id/${movieId}`)
@@ -51,6 +52,17 @@ function TicketInfo({ movieId, sessionId, loggedInUser, seats, price }) {
       }).catch(error => {
         console.error('Error creating transaction:', error);
       });
+
+      axios.put(`http://localhost:5555/session/seats/${sessionId}`,{
+        seats: seats
+      })
+      .then(response => {
+        setSessions(response.data);
+      })
+      .catch(error => {
+        console.error('Error changing session:', error);
+      });
+      
     }
   };
 
@@ -109,6 +121,16 @@ function TicketInfo({ movieId, sessionId, loggedInUser, seats, price }) {
           navigate('/ticket'); // Перехід на нову сторінку
         }).catch(error => {
           console.error('Error creating transaction:', error);
+        });
+
+        axios.put(`http://localhost:5555/session/seats/${sessionId}`,{
+          seats: seats
+        })
+        .then(response => {
+          setSessions(response.data);
+        })
+        .catch(error => {
+          console.error('Error changing session:', error);
         });
       }} />
     </div>
