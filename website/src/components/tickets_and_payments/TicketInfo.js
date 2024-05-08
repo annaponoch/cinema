@@ -11,7 +11,7 @@ function TicketInfo({ movieId, sessionId, loggedInUser, seats, price }) {
   const [showModal, setShowModal] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('cash');
   const navigate = useNavigate();
-  console.log('seats:', seats);
+  // console.log('seats:', seats);
 
   useEffect(() => {
     axios.get(`http://localhost:5555/movie/movie_id/${movieId}`)
@@ -48,7 +48,9 @@ function TicketInfo({ movieId, sessionId, loggedInUser, seats, price }) {
         booked_seats: seats.map(seat => `Ряд ${seat.rowIndex + 1} Місце ${seat.seatIndex + 1}`),
       }).then(response => {
         console.log('Transaction created:', response.data);
-        navigate('/ticket'); // Перехід на нову сторінку
+        // navigate('/ticket'); 
+        const transactionId = response.data._id; // Отримання _id запису
+        navigate(`/ticket?seats=${encodeURIComponent(JSON.stringify(seats))}&totalPrice=${price}&sessionId=${sessionId}&movieId=${movieId}&transactionId=${transactionId}`);
       }).catch(error => {
         console.error('Error creating transaction:', error);
       });
@@ -118,7 +120,9 @@ function TicketInfo({ movieId, sessionId, loggedInUser, seats, price }) {
           booked_seats: seats.map(seat => `Ряд ${seat.rowIndex + 1} Місце ${seat.seatIndex + 1}`),
         }).then(response => {
           console.log('Transaction created:', response.data);
-          navigate('/ticket'); // Перехід на нову сторінку
+          // navigate('/ticket'); 
+          const transactionId = response.data._id; // Отримання _id запису
+          navigate(`/ticket?seats=${encodeURIComponent(JSON.stringify(seats))}&totalPrice=${price}&sessionId=${sessionId}&movieId=${movieId}&transactionId=${transactionId}`);
         }).catch(error => {
           console.error('Error creating transaction:', error);
         });

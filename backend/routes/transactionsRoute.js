@@ -20,13 +20,6 @@ transactionsRoute.post('/', async (request, response)=> {
                 message: 'Not all fields are filled'
             });
         }
-        // const seatsArray = JSON.stringify([
-        //   ['free', 'free', 'free', 'free', 'free'],
-        //   ['free', 'free', 'free', 'free', 'free'],
-        //   ['free', 'free', 'free', 'free', 'free'],
-        //   ['free', 'free', 'free', 'free', 'free'],
-        //   ['free', 'free', 'free', 'free', 'free']
-        // ]);
         const newTransaction = {
           movie_id: request.body.movie_id,
           session_id: request.body.session_id,

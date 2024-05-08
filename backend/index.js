@@ -1,8 +1,6 @@
 import express, { request, response } from 'express';
 import { PORT, mongoDBURL } from './config.js';
 import mongoose from 'mongoose';
-// import {Book} from './models/bookModel.js'
-// import booksRoute from './routes/booksRoute.js';
 import moviesRoute from './routes/moviesRoute.js';
 import usersRoute from './routes/usersRoute.js';
 import sessionsRoute from './routes/sessionsRoute.js';
@@ -20,7 +18,6 @@ app.get('/', (request, response) => {
   });
 
 
-// app.use('/books', booksRoute);
 app.use('/movie', moviesRoute);
 app.use('/user', usersRoute);
 app.use('/session', sessionsRoute);
