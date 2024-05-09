@@ -50,31 +50,41 @@ function Cards() {
 
   const filteredMovies = movies.filter((movie) => movie.dates.includes(selectedDate));
 
+  const getFormattedDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = { month: 'long', day: 'numeric' };
+    return date.toLocaleDateString('uk-UA', options);
+  };
+  
+
   return (
-    <div className='cards'>
-      <h1>Сеанси</h1>
-      <div className='date-buttons'>
-        {uniqueDates.map((date, index) => (
-          <button key={index} onClick={() => handleDateChange(date)}>{date}</button>
-        ))}
-      </div>
-      <div className='cards__container'>
-        <div className='cards__wrapper'>
-          <ul className='cards__items'>
-            {filteredMovies.map((movie, index) => (
-              <CardItem
-                key={index}
-                src={movie.image}
-                heading={movie.title}
-                text={movie.title}
-                movieId={movie.movieId} // Передача movieId у CardItem
-                date={selectedDate} // Передача вибраної дати у CardItem
-              />
+    <>
+      <div className='date-container'>
+        
+        <h1>Сеанси</h1>
+        <div className='date-buttons'>
+          <select className='date-select' onChange={(e) => handleDateChange(e.target.value)}>
+            {uniqueDates.map((date, index) => (
+              <option className='date-option' key={index} value={date}>{getFormattedDate(date)}</option>
             ))}
-          </ul>
+          </select>
         </div>
       </div>
-    </div>
+      <div className='cards'>
+        <div className='cards__items'>
+          {filteredMovies.map((movie, index) => (
+            <CardItem
+              key={index}
+              src={movie.image}
+              heading={movie.title}
+              text={movie.title}
+              movieId={movie.movieId} // Передача movieId у CardItem
+              date={selectedDate} // Передача вибраної дати у CardItem
+            />
+          ))}
+        </div>
+      </div>
+    </>
   );
 }
 

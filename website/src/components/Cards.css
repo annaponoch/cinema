@@ -1,151 +1,93 @@
 .cards {
-    padding: 4rem;
-    background: #fff;
-  }
-  
-  h1 {
-    text-align: center;
-  }
-  
-  .cards__container {
-    /* display: flex; */
-    flex-flow: column;
-    align-items: center;
-    max-width: 1120px;
-    width: 100%;
-    margin: 0 auto;
-  }
-  
-  .cards__wrapper {
-    position: relative;
-    margin: 50px 0 45px;
-  }
-  
-  .cards__items {
-    margin-bottom: 24px;
-  }
-  
-  .cards__item {
-    display: flex;
-    flex: 1;
-    margin: 0 1rem;
-    border-radius: 10px;
-  }
-  
-  .cards__item__link {
-    display: flex;
-    flex-flow: column;
-    width: 100%;
-    box-shadow: 0 6px 20px rgba(56, 125, 255, 0.17),0 6px 20px rgba(56, 125, 255, 0.17);
-    -webkit-filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
-    filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
-    border-radius: 10px;
-    overflow: hidden;
-    text-decoration: none;
-  }
-  
-  .cards__item__pic-wrap {
-    position: relative;
-    width: 100%;
-    padding-top: 67%;
-    overflow: hidden;
-  }
-  
-  .fade-img {
-    animation-name: fade-img;
-    animation-duration: 2s;
-  }
-  
-  /* .cards__item__pic-wrap::after {
-    content: attr(data-category);
-    position: absolute;
-    bottom: 0;
-    margin-left: 10px;
-    padding: 6px 8px;
-    max-width: calc((100%) - 60px);
-    font-size: 12px;
-    font-weight: 700;
-    color: #fff;
-    background-color: #1f98f4;
-    box-sizing: border-box;
-  }
-   */
-  .cards__item__img {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    height: 100%;
-    max-height: 100%;
-    object-fit: cover;
-    transition: all 0.2s linear;
-  }
-  
-  .cards__item__img:hover {
-    transform: scale(1.1);
-  }
-  
-  .cards__item__info {
-    padding: 20px 30px 30px;
-  }
-  
-  .cards__item__text {
-    color: #252e48;
-    font-size: 18px;
-    line-height: 24px;
-    text-align: justify;
-  }
+  padding: 1rem;
+  background: #060515;
+}
+
+h1 {
+  text-align: center;
+  color: #4D3C3C;
+  margin-left: 12.1rem;
+  color: white;
+}
 
 
 
-  .date-buttons {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
+.date-container {
+  display: flex;
+  padding: 1rem;
+  justify-content: flex-start; /* Розмістити елементи зліва */
+  align-items: center;
+  background-color: #060515;
+  color: white;
+}
+
+.date-buttons {
+  margin-right: 12.1rem; /* Змістити елемент вліво */
+
   
-  .date-buttons button {
-    background-color: #42448a; /* Зелений колір */
-    border: none;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 4px;
-    padding: 10px 20px;
-    transition: background-color 0.3s;
-  }
+}
+
+.date-container h2 {
+  margin-left: 12.1rem;
+}
+
+.date-select  {
+  background-color: #060515; 
+  border: none;
+  color: white;
+  text-align: center;
+  font-size: 25px;
+  margin: 4px 2px;
+  cursor: pointer;
+  padding: 10px 20px;
+  transition: background-color 0.3s;
   
-  .date-buttons button:hover {
-    background-color: #45a049; /* Темнозелений колір при наведенні */
-  }
-  
-  .date-buttons button:active {
-    background-color: #ff0000 !important;
-  }
+  /* Додайте горизонтальний відступ */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.date-buttons button:active {
+  background-color: #060515 !important;
+}
 
 
-  @media only screen and (min-width: 1200px) {
-    .content__blog__container {
-      width: 84%;
-    }
-  }
-  
-  @media only screen and (min-width: 1024px) {
-    .cards__items {
-      display: flex;
-    }
-  }
-  
-  @media only screen and (max-width: 1024px) {
-    .cards__item {
-      margin-bottom: 2rem;
-    }
-  }
+
+
+.cards__items{
+  margin-left: 11.1rem;
+  background-color: #060515;
+  margin-right: 11.1rem;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cards__item{
+  width: 100%;
+  background: linear-gradient(to top, #080818, #1B1B29);
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1rem;
+  border-radius: 15px 15px 15px 15px;
+  /* box-shadow: 0 8px 8px rgba(0, 0, 255, 0.05); */
+  text-decoration: none;
+}
+
+.cards__item__img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  padding: 2rem;
+}
+
+.cards__item__info{
+  padding-top: 2rem;
+  text-decoration: none;
+}
+
+.cards__item__text{
+  font-size: 2.5rem;
+  color: white;
+}

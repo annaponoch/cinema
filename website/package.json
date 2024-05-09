@@ -11,6 +11,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "flowbite-react": "^0.9.0",
     "framework7-react": "^8.3.3",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
