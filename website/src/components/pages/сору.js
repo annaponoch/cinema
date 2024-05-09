@@ -1,23 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import {  Button } from 'react-bootstrap';
 import axios from 'axios';
-import '../../App.css';
+import { useParams } from 'react-router-dom';
+import SeatPopup from '../tickets_and_payments/SeatPopup';
 import Footer from '../Footer';
-import { useLocation } from 'react-router-dom';
-import UserForm from '../tickets_and_payments/UserForm';
+import Modal from 'react-bootstrap/Modal';
+import './Session.css'
 
-function PayForTicket() {
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
+function SessionPage() {
+  const { movieId, date } = useParams();
   const [movie, setMovie] = useState(null);
   const [sessions, setSessions] = useState([]);
-  const [loggedInUser, setLoggedInUser] = useState(null);
-
-  // Отримання параметрів з URL
-  const seats = JSON.parse(searchParams.get('seats'));
-  const price = searchParams.get('totalPrice');
-  const sessionId = searchParams.get('sessionId');
-  const movieId = searchParams.get('movieId');
+  const [selectedSession, setSelectedSession] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     // Отримання даних про фільм
@@ -30,63 +24,61 @@ function PayForTicket() {
       });
 
     // Отримання даних про сеанси
-    axios.get(`http://localhost:5555/session/${sessionId}`)
+    axios.get(`http://localhost:5555/session/movie/${movieId}/${date}`)
       .then(response => {
         setSessions(response.data);
       })
       .catch(error => {
         console.error('Error fetching sessions:', error);
       });
+  }, [movieId, date]);
 
-    // Перевірка, чи є збережений користувач у localStorage
-    const storedUser = localStorage.getItem('loggedInUser');
-    if (storedUser) {
-      setLoggedInUser(JSON.parse(storedUser));
-    }
-  }, [movieId, sessionId]);
-
-  const handleLogin = (user) => {
-    setLoggedInUser(user);
-    // Зберігаємо дані користувача у localStorage
-    localStorage.setItem('loggedInUser', JSON.stringify(user));
+  const handleSessionClick = (session) => {
+    setSelectedSession(session);
+    setShowModal(true); // Відкриття модального вікна при натисканні на кнопку сеансу
   };
 
-  const handleLogout = () => {
-    setLoggedInUser(null);
-    // Видаляємо дані користувача з localStorage при виході
-    localStorage.removeItem('loggedInUser');
-  };
+  if (!movie || !sessions) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <>
-      <br />
-        {/* Форма для авторизації та реєстрації */}
-        {!loggedInUser && <UserForm onLogin={handleLogin} />}
-        {loggedInUser && (
-          <div>
-            <p>Logged in as: {loggedInUser.name} ({loggedInUser.email})</p>
-            <Button variant="link" onClick={handleLogout}>Logout</Button>
-          </div>
-        )}
-      {movie && (
-        <div className='about_page_container'>
-          <div className='user_h2_container'>
-          <h3 >Квитки</h3>
-          </div> 
-          {/* Відображення інформації про фільм та квитки */}
-            <h3>Movie: {movie.title}</h3>
-            <img src={movie.image_URL} alt={movie.title} />
-            <h3>Seats: {seats.map(seat => `Ряд ${seat.rowIndex + 1} Місце ${seat.seatIndex + 1}`).join(', ')}</h3>
-            <h3>Price: {price}</h3>
-            <h3>Session Date & Time: {new Date(sessions.date_time).toLocaleString()}</h3>
-
-
-        
-        </div>
-      )}
-      <Footer />
-    </>
+    <div className='session_page'>
+      <div className='movie_container'>
+      <h2>{movie.title}</h2>
+      <img src={movie.image_URL} alt={movie.title} />
+      <p>Director: {movie.director}</p>
+      <p>Description: {movie.description}</p>
+      <h3>Sessions:</h3>
+      <ul>
+        {sessions.map(session => (
+          <li key={session._id}>
+            <button onClick={() => handleSessionClick(session)}>
+              {session.date_time.split('T')[1].substring(0, 5)}
+            </button>
+          </li>
+        ))}
+      </ul>
+      <Footer/>
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Seat Selection</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        {selectedSession && (
+          <SeatPopup 
+            seats={JSON.parse(selectedSession.seats[0])} 
+            price={selectedSession.price} 
+            sessionId={selectedSession._id}
+            movieId={movie.movie_id} // Додаємо ідентифікатор сеансу
+          />
+          )}
+        </Modal.Body>
+      </Modal>
+      </div>
+      
+    </div>
   );
 }
 
-export default PayForTicket;
+export default SessionPage;

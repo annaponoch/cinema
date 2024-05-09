@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import SeatPopup from '../tickets_and_payments/SeatPopup';
 import Footer from '../Footer';
 import Modal from 'react-bootstrap/Modal';
+import './Session.css'
 
 function SessionPage() {
   const { movieId, date } = useParams();
@@ -37,27 +38,60 @@ function SessionPage() {
     setShowModal(true); // Відкриття модального вікна при натисканні на кнопку сеансу
   };
 
+  const getFormattedDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = { month: 'long', day: 'numeric' };
+    return date.toLocaleDateString('uk-UA', options);
+  };
+
+
   if (!movie || !sessions) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div>
-      <h2>{movie.title}</h2>
-      <img src={movie.image_URL} alt={movie.title} />
-      <p>Director: {movie.director}</p>
-      <p>Description: {movie.description}</p>
-      <h3>Sessions:</h3>
-      <ul>
-        {sessions.map(session => (
-          <li key={session._id}>
-            <button onClick={() => handleSessionClick(session)}>
-              {session.date_time.split('T')[1].substring(0, 5)}
-            </button>
-          </li>
-        ))}
-      </ul>
-      <Footer/>
+    <>
+    <div className='session_page'>
+      <div className='movie_container'>
+       {/* FOR IMG AND DETAILS */}
+        <div className='first_row'>
+          <img
+              className='image'
+              alt={movie.title}
+              src={movie.image_URL}
+            />
+
+          <div className='details'>
+          <h2>{movie.title}</h2>
+          <div className='format'>
+          <h3>{movie.format}</h3>
+          </div>
+          <h3>{getFormattedDate(date)}</h3>
+          <div className='buttons_container'>
+          {sessions.map(session => (
+                <button className='button_time' onClick={() => handleSessionClick(session)}>
+                  <h3>{session.date_time.split('T')[1].substring(0, 5)}</h3>
+                </button>
+            ))}
+          </div>
+          <h4>Режисер:</h4>
+          <h3>{movie.director}</h3>
+          <h4>Жанр:</h4>
+          <h3>Пригоди, мультфільм</h3>
+          </div>
+
+        </div>
+        {/* FOR DESCRIPTION */}
+        <div className='second_row'>
+          <div className='description_text'>
+            <h3>Опис фільму</h3>
+            <h4>{movie.description}</h4>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <Footer/>
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Seat Selection</Modal.Title>
@@ -73,7 +107,7 @@ function SessionPage() {
           )}
         </Modal.Body>
       </Modal>
-    </div>
+    </>
   );
 }
 
