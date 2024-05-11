@@ -88,4 +88,14 @@ h4 {
 }
 
 
+/* стилі для модалу */
 
+/* Перезапис стилів Bootstrap */
+.modal-content {
+    background-color: #998888;
+  }
+
+.modal-header {
+    color: white;
+    
+  }

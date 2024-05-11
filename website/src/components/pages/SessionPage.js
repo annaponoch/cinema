@@ -94,7 +94,7 @@ function SessionPage() {
     <Footer/>
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Seat Selection</Modal.Title>
+          <Modal.Title>Оберіть місця</Modal.Title>
         </Modal.Header>
         <Modal.Body>
         {selectedSession && (

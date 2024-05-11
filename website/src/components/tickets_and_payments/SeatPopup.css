@@ -9,24 +9,58 @@
 }
 
 .seat-free {
-  background-color: green;
+  background-color: #41E181;
   color: white;
 }
 
 .seat-occupied {
-  background-color: red;
+  background-color: #E14141;
   color: white;
 }
 
 .seat-selected {
-  background-color: #66CCFF; /* Додаємо колір для обраних місць */
+  background-color: #419EE1; /* Додаємо колір для обраних місць */
   color: white;
-}
-
-.seat.selected {
-  background-color: gray; /* Сірий колір для обраних місць */
 }
 
 .seat:disabled {
   cursor: not-allowed; /* Зміна курсора для зайнятих місць */
+}
+
+
+.seat-grid{
+  color: white;
+}
+
+.seat-row {
+  display: flex;
+  justify-content: center;
+}
+
+.number-row  {
+  text-align: center;
+  padding: 1rem;
+  font-size: 16px;
+}
+
+.payment-section p{
+  text-align: center;
+  margin-bottom: 0rem;
+}
+
+.payment-button{
+  background-color: white;
+  padding: 8px 20px;
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  color: #514545;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+.button-cont{
+  display: flex;
+  justify-content: center;
 }
