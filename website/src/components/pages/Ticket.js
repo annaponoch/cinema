@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import QRCode from "react-qr-code";
 import Footer from '../Footer';
 import { useLocation } from 'react-router-dom';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import axios from 'axios';
 
 // Стилі для PDF
 
@@ -16,6 +17,21 @@ const Ticket = () => {
   const movieId = searchParams.get('movieId');
   const transactionId = searchParams.get('transactionId');
   const userEmail = searchParams.get('userEmail');
+
+  const [sessions, setSessions] = useState([]);
+
+  useEffect(() => {
+    axios.get(`http://localhost:5555/session/${sessionId}`)
+      .then(response => {
+        setSessions(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching sessions:', error);
+      });
+      
+  }, [sessionId]);
+
+
 
   const handleDownloadPDF = () => {
     const filename = 'ticket.pdf';
@@ -70,7 +86,7 @@ const Ticket = () => {
           {sessionId && (
             <>
               <h3>Дата та час сеансу:</h3>
-              <h4>{sessionId}</h4>
+              <h4>{sessions.date_time}</h4>
             </>
           )}
           {userEmail && (

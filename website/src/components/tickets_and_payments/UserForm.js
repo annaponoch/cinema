@@ -76,7 +76,7 @@ function UserForm({ onLogin, loggedInUser }) {
               )}
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email-адреса</Form.Label>
-                <Form.Control type="text" placeholder="Введіть email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <Form.Control type="email" placeholder="Введіть email" value={email} onChange={(e) => setEmail(e.target.value)} />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Пароль</Form.Label>

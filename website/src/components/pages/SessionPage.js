@@ -77,7 +77,7 @@ function SessionPage() {
           <h4>Режисер:</h4>
           <h3>{movie.director}</h3>
           <h4>Жанр:</h4>
-          <h3>Пригоди, мультфільм</h3>
+          <h3>{movie.genre}</h3>
           </div>
 
         </div>

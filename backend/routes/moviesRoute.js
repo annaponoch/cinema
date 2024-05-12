@@ -11,7 +11,8 @@ moviesRoute.post('/', async (request, response) => {
           !request.body.format ||
           !request.body.image_URL ||
           !request.body.description ||
-          !request.body.director
+          !request.body.director||
+          !request.body.genre 
       ) {
           return response.status(400).send({
               message: 'Not all fields are filled'
@@ -30,7 +31,8 @@ moviesRoute.post('/', async (request, response) => {
           format: request.body.format,
           image_URL: request.body.image_URL,
           description: request.body.description,
-          director: request.body.director
+          director: request.body.director,
+          genre: request.body.genre
       };
 
       const movie = await Movie.create(newMovie);
@@ -115,7 +117,8 @@ moviesRoute.post('/', async (request, response) => {
         !request.body.format||
         !request.body.image_URL||
         !request.body.description||
-        !request.body.director  
+        !request.body.director||
+        !request.body.genre  
       ) {
         return response.status(400).send({
           message: 'Send all required fields',
