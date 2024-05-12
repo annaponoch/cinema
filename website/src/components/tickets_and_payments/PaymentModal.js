@@ -49,10 +49,7 @@ const PaymentModal = ({ show, handleClose, handlePayment }) => {
         {errorMessage && <p className="text-danger">{errorMessage}</p>}
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          Закрити
-        </Button>
-        <Button variant="primary" onClick={handleConfirmPayment}>
+        <Button className="payment-button" variant="secondary" onClick={handleConfirmPayment}>
           Оплатити
         </Button>
       </Modal.Footer>

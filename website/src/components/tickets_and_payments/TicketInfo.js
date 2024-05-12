@@ -53,7 +53,7 @@ function TicketInfo({ movieId, sessionId, loggedInUser, seats, price }) {
       }).then(response => {
         console.log('Transaction created:', response.data);
         const transactionId = response.data._id;
-        navigate(`/ticket?seats=${encodeURIComponent(JSON.stringify(seats))}&totalPrice=${price}&sessionId=${sessionId}&movieId=${movieId}&transactionId=${transactionId}`);
+        navigate(`/ticket?seats=${encodeURIComponent(JSON.stringify(seats))}&totalPrice=${price}&sessionId=${sessionId}&movieId=${movie.title}&userEmail=${loggedInUser.email}&transactionId=${transactionId}`);
       }).catch(error => {
         console.error('Error creating transaction:', error);
       });
@@ -81,11 +81,11 @@ function TicketInfo({ movieId, sessionId, loggedInUser, seats, price }) {
           <h3>Місця: {seats.map(seat => `Ряд ${seat.rowIndex + 1} Місце ${seat.seatIndex + 1}`).join(', ')}</h3>
           <h3>До сплати: {price} гривень</h3>
           <h3>Дата та час сеансу: {new Date(sessions.date_time).toLocaleString()}</h3>
+          {(!loggedInUser) && (
+            <p> Будь ласка, увійдіть або зареєструйтеся, щоб продовжити</p>
+          )}
           </div>
         </>
-      )}
-      {(!loggedInUser) && (
-        <p>Будь ласка, увійдіть або зареєструйтеся, щоб продовжити</p>
       )}
       {(loggedInUser) && (
         <>

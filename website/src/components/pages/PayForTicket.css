@@ -52,3 +52,66 @@
 .f_container{
     padding-left: 1rem;
 }
+
+.ticket_page{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #060515;
+    padding: 1rem;
+    color: white;
+}
+
+.ticket_page h1{
+    text-align: center;
+    color: white;
+}
+
+.ticket {
+    background: #1B1B29;
+    border-radius: 15px;
+    margin-left: 11.1rem;
+    margin-right: 11.1rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    display: inline-block; /* Робить дів вирівняним зліва та автоматично змінює його розмір */
+    overflow: auto;
+  }
+  
+.ticketContent{
+    display: grid;
+    grid-template-columns: 60% 40%;
+    background: #1B1B29;
+}
+
+
+.ticket_info{
+    padding-left: 3rem;
+}
+  .QR_cont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding-right: 3rem;
+  }
+  
+  .download_button {
+    background-color: #897979;
+    padding: 8px 20px;
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    color: white;
+    outline: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .b_con {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  

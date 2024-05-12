@@ -1,0 +1,38 @@
+.sign_page{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #060515;
+    padding: 1rem;
+    color: white;
+}
+
+.sign_page h1{
+    text-align: center;
+    color: white;
+    margin-left: 7rem;
+    margin-right: 7rem;
+}
+
+.sign_up {
+    background: #1B1B29;
+    border-radius: 15px;
+    margin-left: 11.1rem;
+    margin-right: 11.1rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    display: inline-block; /* Робить дів вирівняним зліва та автоматично змінює його розмір */
+    overflow: auto;
+  }
+
+.user_inf{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+    margin-left: 7rem;
+    margin-right: 7rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}

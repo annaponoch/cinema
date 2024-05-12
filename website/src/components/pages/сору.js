@@ -1,100 +1,126 @@
-import React, { useState } from 'react';
-import { Form, Button, Alert } from 'react-bootstrap';
-import axios from 'axios';
-import './UserForm.css';
+import React from 'react';
+import QRCode from "react-qr-code";
+import Footer from '../Footer';
+import { useLocation } from 'react-router-dom';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
-function UserForm({ onLogin, loggedInUser }) {
-  const [isRegistering, setIsRegistering] = useState(false);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+// Стилі для PDF
+const styles = {
+  container: {
+    borderRadius: 15},
+  
+  ticketContainer: {
+    display: 'flex',
+    background: '#1B1B29',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  qrCode: {
+    width: 150,
+    height: 150,
+    marginTop: 10
+  },
+  downloadButton: {
+    padding: 10,
+    backgroundColor: '#007bff',
+    color: '#ffffff',
+    borderRadius: 5,
+    textDecoration: 'none',
+    alignSelf: 'center',
+    marginTop: 20,
+    fontSize: 16,
+    cursor: 'pointer',
+    border: 'none'
+  }
+};
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (isRegistering) {
-      try {
-        const response = await axios.post(`http://localhost:5555/user`, { name, email, password });
-        setSuccessMessage('Реєстрація успішна!');
-        setErrorMessage('');
-        onLogin(response.data); // Передаємо дані користувача у батьківський компонент
-      } catch (error) {
-        setSuccessMessage('');
-        setErrorMessage('Помилка реєстрації: ' + error.response.data.message);
-      }
-    } else {
-      try {
-        const response = await axios.post(`http://localhost:5555/user/login`, { email, password });
-        setSuccessMessage('Авторизація успішна!');
-        setErrorMessage('');
-        onLogin(response.data); // Передаємо дані користувача у батьківський компонент
-      } catch (error) {
-        setSuccessMessage('');
-        setErrorMessage('Помилка авторизації: ' + error.response.data.message);
-      }
-    }
-  };
+const Ticket = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const seats = JSON.parse(searchParams.get('seats'));
+  const price = searchParams.get('totalPrice');
+  const sessionId = searchParams.get('sessionId');
+  const movieId = searchParams.get('movieId');
+  const transactionId = searchParams.get('transactionId');
+  const userEmail = searchParams.get('userEmail');
 
-  const handleLogout = () => {
-    onLogin(null); // Передаємо null у батьківський компонент, щоб затерти дані про користувача
+  const handleDownloadPDF = () => {
+    const filename = 'ticket.pdf';
+    const input = document.getElementById('ticketContent');
+  
+    html2canvas(input, { scale: 1, scrollY: -window.scrollY })
+      .then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a6');
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save(filename);
+      });
   };
 
   return (
-    <div className='about_page_container'>
-      <div className='user_h2_container'>
-        <h3 >Дані користувача</h3>
-      </div>
-      {loggedInUser ? (
-        <div>
-          <p>Ім'я: {loggedInUser.name}</p>
-          <p>Email: {loggedInUser.email}</p>
-          <Button variant="danger" onClick={handleLogout}>
-            Вийти
-          </Button>
+    <>
+ 
+        <div className='pay_for_page'>
+          <div className='ticket'>
+        <div id="ticketContent" style={styles.container}>
+          <div style={styles.ticketContainer}>
+          <h1>Обрані квитки</h1>
+          <div className='ticket_info'>
+          {movieId && (
+              <>
+              <h3>Фільм:</h3>
+              <h4>{movieId}</h4>
+            </>
+          )}
+          {seats.length > 0 && (
+            <>
+              <h3>Заброньовані місця:</h3>
+              {seats.map((seat, index) => (
+                <h4 key={index}>{`(Ряд ${seat.rowIndex + 1}, Місце ${seat.seatIndex + 1})`}</h4>
+              ))}
+            </>
+          )}
+          {price && (
+            <>
+              <h3>Загальна вартість:</h3>
+              <h4>{price}</h4>
+            </>
+          )}
+          {sessionId && (
+            <>
+              <h3>Дата та час сеансу:</h3>
+              <h4>{sessionId}</h4>
+            </>
+          )}
+          {userEmail && (
+            <>
+              <h3>Електронна пошта:</h3>
+              <h4>{userEmail}</h4>
+            </>
+          )}
+          {transactionId && (
+            <>
+              <h3>Номер квитка:</h3>
+              <h4>{transactionId}</h4>
+            </>
+          )}
+            </div>
+            <div className='QR_cont'>
+              <QRCode value={transactionId} size={256} />
+              
+            </div>
+            
+          </div>
+          </div>
+          <div className='b_con'><button className='download_button' onClick={handleDownloadPDF}>Завантажити PDF</button></div>
+          </div>
         </div>
-      ) : (
-        <>
-          {successMessage && (
-            <Alert variant="success">
-              {successMessage}
-            </Alert>
-          )}
-          {errorMessage && (
-            <Alert variant="danger">
-              {errorMessage}
-            </Alert>
-          )}
-          {!successMessage && (
-            <Form className="form" size='70%' onSubmit={handleSubmit}>
-              {isRegistering && (
-                <Form.Group className="mb-3" controlId="formBasicName">
-                  <Form.Label>Прізвище, ім'я</Form.Label>
-                  <Form.Control type="text" placeholder="Введіть ПІ" value={name} onChange={(e) => setName(e.target.value)} />
-                </Form.Group>
-              )}
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email-адреса</Form.Label>
-                <Form.Control type="text" placeholder="Введіть email" value={email} onChange={(e) => setEmail(e.target.value)} />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Пароль</Form.Label>
-                <Form.Control type="password" placeholder="Введіть пароль" value={password} onChange={(e) => setPassword(e.target.value)} />
-              </Form.Group>
-              <Button variant="dark" type="submit">
-                {isRegistering ? 'Зареєструватись' : 'Авторизуватись'}
-              </Button>
-            </Form>
-          )}
-          {!successMessage && (
-            <Button variant="link" onClick={() => setIsRegistering(!isRegistering)}>
-              {isRegistering ? 'У мене вже є акаунт' : 'Зареєструватись'}
-            </Button>
-          )}
-        </>
-      )}
-    </div>
+      <Footer />
+    </>
   );
 }
 
-export default UserForm;
+export default Ticket;

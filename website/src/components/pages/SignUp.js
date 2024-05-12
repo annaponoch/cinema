@@ -4,7 +4,7 @@ import Footer from '../Footer';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import UserForm from '../tickets_and_payments/UserForm'; 
-
+import './SignUp.css'
 
 export default function SignUp() {
   const [loggedInUser, setLoggedInUser] = useState(null);
@@ -44,15 +44,13 @@ export default function SignUp() {
 
   return(
     <>
-    <br></br>
     {loggedInUser ? (
-        <div className='about_page_container'>
-          <div className='user_h2_container'>
-            <h3>Акаунт користувача</h3>
-          </div>
-          <p>Ім'я: {loggedInUser.name}</p>
-          <p>Email: {loggedInUser.email}</p>
-          <p>ID: {loggedInUser._id}</p>
+        <div className='sign_page'>
+          <div className='sign_up'>
+            <h1>Акаунт користувача</h1>
+          <div className='user_inf'>
+          <h3>Ім'я:</h3> <h4>{loggedInUser.name}</h4>
+          <h3>Email:</h3> <h4>{loggedInUser.email}</h4>
           <Button variant="danger" onClick={handleLogout}>
             Вийти
           </Button>
@@ -60,10 +58,16 @@ export default function SignUp() {
           <Button variant="danger" onClick={DeleteUser}>
             Видалити Акаунт
           </Button>
-          <br />
+          </div>
+          </div>
         </div>
       ) : (
-        <UserForm onLogin={handleLogin} />
+        <div className='sign_page'>
+          <div className='sign_up'>
+          <UserForm onLogin={handleLogin} />
+          </div>
+          </div>
+        
       )}
     <Footer/>
     </>
