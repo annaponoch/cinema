@@ -23,12 +23,13 @@
 
 .date-buttons {
   margin-right: 12.1rem; /* Змістити елемент вліво */
-
+  border: none;
   
 }
 
 .date-container h2 {
   margin-left: 12.1rem;
+  border: none;
 }
 
 .date-select  {
@@ -41,14 +42,14 @@
   cursor: pointer;
   padding: 10px 20px;
   transition: background-color 0.3s;
-  
-  /* Додайте горизонтальний відступ */
+  border: none;
   margin-left: auto;
   margin-right: auto;
 }
 
 .date-buttons button:active {
   background-color: #060515 !important;
+  border: none;
 }
 
 

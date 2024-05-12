@@ -1,20 +1,13 @@
-video {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    z-index: -1;
-  }
-  
+ 
   .hero-container {
-    background-image: url('C:\Users\Anna\универ\Диплом\Final project\website\public\images\star.jpg');
-    height: 30vh;
+    background-image: url('C:\Users\Anna\универ\Дипломна робота\cinema\website\public\images\posters.jpg');
+    height: 50vh;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.7);
     object-fit: contain;
   }
   
@@ -22,14 +15,15 @@ video {
     color: #ffffff;
     font-size: 100px;
     font-weight: bold;
-    margin-top: -90px;
+    margin-top: 2.5rem;
+    text-align: center;
   }
   
   .hero-container > p {
-    margin-top: 8px;
     color: #ffffff;
     font-size: 32px;
     font-family: 'KyivType Serif';
+    text-align: center;
   }
   
   .hero-btns {

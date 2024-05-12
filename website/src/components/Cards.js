@@ -20,6 +20,7 @@ function Cards() {
                   title: movie.title,
                   image: movie.image_URL,
                   dates: dates,
+                  format: movie.format,
                   movieId: movie.movie_id // Додано movieId в об'єкт фільму
                 };
               }
@@ -79,7 +80,8 @@ function Cards() {
               heading={movie.title}
               text={movie.title}
               movieId={movie.movieId} // Передача movieId у CardItem
-              date={selectedDate} // Передача вибраної дати у CardItem
+              date={selectedDate}
+              format={movie.format}  // Передача вибраної дати у CardItem
             />
           ))}
         </div>

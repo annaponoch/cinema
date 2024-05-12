@@ -5,7 +5,6 @@ import './HeroSection.css';
 function HeroSection() {
   return (
     <div className='hero-container'>
-      <br></br><br></br><br></br>
       <h1>ЗІРОНЬКА</h1>
       <p>твій улюблений кінотеатр в Києві</p>
      

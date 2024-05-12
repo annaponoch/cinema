@@ -15,6 +15,9 @@ function CardItem(props) {
           </div>
           <div className='cards__item__info'>
             <h5 className='cards__item__text'>{props.text}</h5>
+            <div className='format'>
+            <h3>{props.format}</h3>
+            </div>
           </div>
         </Link>
     // </div>
