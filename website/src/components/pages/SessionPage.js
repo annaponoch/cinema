@@ -46,7 +46,7 @@ function SessionPage() {
 
 
   if (!movie || !sessions) {
-    return <div>Loading...</div>;
+    return <div className='loading'>Loading...</div>;
   }
 
   return (

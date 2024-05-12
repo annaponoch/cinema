@@ -99,3 +99,9 @@ h4 {
     color: white;
     
   }
+
+.loading{
+    background: #060515;
+    width: 100rem;
+	height:100rem;
+}

@@ -3,7 +3,7 @@
   background: #060515;
 }
 
-h1 {
+.cards h1 {
   text-align: center;
   color: #4D3C3C;
   margin-left: 12.1rem;
@@ -13,12 +13,12 @@ h1 {
 
 
 .date-container {
-  display: flex;
   padding: 1rem;
-  justify-content: flex-start; /* Розмістити елементи зліва */
+  display: flex;
   align-items: center;
   background-color: #060515;
   color: white;
+  padding-left: 12.1rem;
 }
 
 .date-buttons {

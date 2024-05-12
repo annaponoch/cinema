@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-
+import '../pages/PayForTicket.css'
 import PaymentModal from './PaymentModal';
 
 function TicketInfo({ movieId, sessionId, loggedInUser, seats, price }) {
@@ -71,15 +71,17 @@ function TicketInfo({ movieId, sessionId, loggedInUser, seats, price }) {
   };
 
   return (
-    <div className='about_page_container'>
+    <>
       {movie && (
         <>
-          <h2>Обрані квитки</h2>
-          <h3>Movie: {movie.title}</h3>
-          <img src={movie.image_URL} alt={movie.title} />
-          <h3>Seats: {seats.map(seat => `Ряд ${seat.rowIndex + 1} Місце ${seat.seatIndex + 1}`).join(', ')}</h3>
-          <h3>Price: {price}</h3>
-          <h3>Session Date & Time: {new Date(sessions.date_time).toLocaleString()}</h3>
+        <div className='user_h2_container'><h2>Обрані квитки</h2></div>
+        <div className='info_container'>
+          <h3>Фільм: {movie.title}</h3>
+          {/* <img src={movie.image_URL} alt={movie.title} /> */}
+          <h3>Місця: {seats.map(seat => `Ряд ${seat.rowIndex + 1} Місце ${seat.seatIndex + 1}`).join(', ')}</h3>
+          <h3>До сплати: {price} гривень</h3>
+          <h3>Дата та час сеансу: {new Date(sessions.date_time).toLocaleString()}</h3>
+          </div>
         </>
       )}
       {(!loggedInUser) && (
@@ -87,7 +89,7 @@ function TicketInfo({ movieId, sessionId, loggedInUser, seats, price }) {
       )}
       {(loggedInUser) && (
         <>
-          <Form>
+          <Form className='f_container'>
             <Form.Check
               type="radio"
               label="Оплатити в касі кінотеатру"
@@ -105,16 +107,16 @@ function TicketInfo({ movieId, sessionId, loggedInUser, seats, price }) {
               onChange={() => setPaymentMethod('online')}
             />
           </Form>
-          <br />
-          <Button variant="dark" onClick={handleConfirmPayment}>
+          <div className='logout_button_container'>
+          <Button className='button_book' variant="dark" onClick={handleConfirmPayment}>
             Забронювати
-          </Button>
+          </Button></div>
           <PaymentModal show={showModal} handleClose={() => setShowModal(false)} handlePayment={() => {
             // Оплата карткою онлайн
           }} />
         </>
       )}
-    </div>
+    </>
   );
 }
 

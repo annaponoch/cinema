@@ -25,6 +25,8 @@ function SeatPopup({ seats, price, sessionId, movieId }) {
  
   return (
     <div className='seat-grid'>
+      <div className='seats'>
+      <div className='screen'></div>
       {seats.map((row, rowIndex) => (
         <div key={rowIndex} className='seat-row'>
           <div className='number-row'>{`${rowIndex + 1}`}</div>
@@ -39,7 +41,8 @@ function SeatPopup({ seats, price, sessionId, movieId }) {
             </button>
           ))}
         </div>
-      ))}
+        
+      ))}</div>
       {selectedSeats.length > 0 && (
         <div className="payment-section">
           <p>Загальна вартість: {totalPrice} грн</p>
@@ -51,6 +54,7 @@ function SeatPopup({ seats, price, sessionId, movieId }) {
           <div className="button-cont"><button className="payment-button" onClick={handlePayment}>Купити квитки</button></div>
         </div>
       )}
+      
     </div>
   );
 

@@ -41,9 +41,9 @@ function UserForm({ onLogin, loggedInUser }) {
   };
 
   return (
-    <div className='about_page_container'>
+    <>
       <div className='user_h2_container'>
-        <h3 >Дані користувача</h3>
+        <h2 >Дані користувача</h2>
       </div>
       {loggedInUser ? (
         <div>
@@ -65,7 +65,8 @@ function UserForm({ onLogin, loggedInUser }) {
               {errorMessage}
             </Alert>
           )}
-          {!successMessage && (
+          <div className="form-container">
+          {!successMessage && (           
             <Form className="form" size='70%' onSubmit={handleSubmit}>
               {isRegistering && (
                 <Form.Group className="mb-3" controlId="formBasicName">
@@ -81,19 +82,21 @@ function UserForm({ onLogin, loggedInUser }) {
                 <Form.Label>Пароль</Form.Label>
                 <Form.Control type="password" placeholder="Введіть пароль" value={password} onChange={(e) => setPassword(e.target.value)} />
               </Form.Group>
-              <Button variant="dark" type="submit">
+              <div className="button_contr">
+              <Button className="button_user" variant="dark" type="submit">
                 {isRegistering ? 'Зареєструватись' : 'Авторизуватись'}
               </Button>
-            </Form>
+              {!successMessage && (
+              <Button variant="link" onClick={() => setIsRegistering(!isRegistering)}>
+                {isRegistering ? 'У мене вже є акаунт' : 'Зареєструватись'}
+              </Button>
+            )}
+              </div>
+            </Form>           
           )}
-          {!successMessage && (
-            <Button variant="link" onClick={() => setIsRegistering(!isRegistering)}>
-              {isRegistering ? 'У мене вже є акаунт' : 'Зареєструватись'}
-            </Button>
-          )}
+        </div>
         </>
-      )}
-    </div>
+      )}</>
   );
 }
 

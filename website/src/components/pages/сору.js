@@ -1,84 +1,100 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Form, Button, Alert } from 'react-bootstrap';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import SeatPopup from '../tickets_and_payments/SeatPopup';
-import Footer from '../Footer';
-import Modal from 'react-bootstrap/Modal';
-import './Session.css'
+import './UserForm.css';
 
-function SessionPage() {
-  const { movieId, date } = useParams();
-  const [movie, setMovie] = useState(null);
-  const [sessions, setSessions] = useState([]);
-  const [selectedSession, setSelectedSession] = useState(null);
-  const [showModal, setShowModal] = useState(false);
+function UserForm({ onLogin, loggedInUser }) {
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  useEffect(() => {
-    // Отримання даних про фільм
-    axios.get(`http://localhost:5555/movie/movie_id/${movieId}`)
-      .then(response => {
-        setMovie(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching movie:', error);
-      });
-
-    // Отримання даних про сеанси
-    axios.get(`http://localhost:5555/session/movie/${movieId}/${date}`)
-      .then(response => {
-        setSessions(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching sessions:', error);
-      });
-  }, [movieId, date]);
-
-  const handleSessionClick = (session) => {
-    setSelectedSession(session);
-    setShowModal(true); // Відкриття модального вікна при натисканні на кнопку сеансу
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (isRegistering) {
+      try {
+        const response = await axios.post(`http://localhost:5555/user`, { name, email, password });
+        setSuccessMessage('Реєстрація успішна!');
+        setErrorMessage('');
+        onLogin(response.data); // Передаємо дані користувача у батьківський компонент
+      } catch (error) {
+        setSuccessMessage('');
+        setErrorMessage('Помилка реєстрації: ' + error.response.data.message);
+      }
+    } else {
+      try {
+        const response = await axios.post(`http://localhost:5555/user/login`, { email, password });
+        setSuccessMessage('Авторизація успішна!');
+        setErrorMessage('');
+        onLogin(response.data); // Передаємо дані користувача у батьківський компонент
+      } catch (error) {
+        setSuccessMessage('');
+        setErrorMessage('Помилка авторизації: ' + error.response.data.message);
+      }
+    }
   };
 
-  if (!movie || !sessions) {
-    return <div>Loading...</div>;
-  }
+  const handleLogout = () => {
+    onLogin(null); // Передаємо null у батьківський компонент, щоб затерти дані про користувача
+  };
 
   return (
-    <div className='session_page'>
-      <div className='movie_container'>
-      <h2>{movie.title}</h2>
-      <img src={movie.image_URL} alt={movie.title} />
-      <p>Director: {movie.director}</p>
-      <p>Description: {movie.description}</p>
-      <h3>Sessions:</h3>
-      <ul>
-        {sessions.map(session => (
-          <li key={session._id}>
-            <button onClick={() => handleSessionClick(session)}>
-              {session.date_time.split('T')[1].substring(0, 5)}
-            </button>
-          </li>
-        ))}
-      </ul>
-      <Footer/>
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Seat Selection</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-        {selectedSession && (
-          <SeatPopup 
-            seats={JSON.parse(selectedSession.seats[0])} 
-            price={selectedSession.price} 
-            sessionId={selectedSession._id}
-            movieId={movie.movie_id} // Додаємо ідентифікатор сеансу
-          />
-          )}
-        </Modal.Body>
-      </Modal>
+    <div className='about_page_container'>
+      <div className='user_h2_container'>
+        <h3 >Дані користувача</h3>
       </div>
-      
+      {loggedInUser ? (
+        <div>
+          <p>Ім'я: {loggedInUser.name}</p>
+          <p>Email: {loggedInUser.email}</p>
+          <Button variant="danger" onClick={handleLogout}>
+            Вийти
+          </Button>
+        </div>
+      ) : (
+        <>
+          {successMessage && (
+            <Alert variant="success">
+              {successMessage}
+            </Alert>
+          )}
+          {errorMessage && (
+            <Alert variant="danger">
+              {errorMessage}
+            </Alert>
+          )}
+          {!successMessage && (
+            <Form className="form" size='70%' onSubmit={handleSubmit}>
+              {isRegistering && (
+                <Form.Group className="mb-3" controlId="formBasicName">
+                  <Form.Label>Прізвище, ім'я</Form.Label>
+                  <Form.Control type="text" placeholder="Введіть ПІ" value={name} onChange={(e) => setName(e.target.value)} />
+                </Form.Group>
+              )}
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Email-адреса</Form.Label>
+                <Form.Control type="text" placeholder="Введіть email" value={email} onChange={(e) => setEmail(e.target.value)} />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>Пароль</Form.Label>
+                <Form.Control type="password" placeholder="Введіть пароль" value={password} onChange={(e) => setPassword(e.target.value)} />
+              </Form.Group>
+              <Button variant="dark" type="submit">
+                {isRegistering ? 'Зареєструватись' : 'Авторизуватись'}
+              </Button>
+            </Form>
+          )}
+          {!successMessage && (
+            <Button variant="link" onClick={() => setIsRegistering(!isRegistering)}>
+              {isRegistering ? 'У мене вже є акаунт' : 'Зареєструватись'}
+            </Button>
+          )}
+        </>
+      )}
     </div>
   );
 }
 
-export default SessionPage;
+export default UserForm;

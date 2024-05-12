@@ -1,10 +1,48 @@
 .user_h2_container {
+    text-align: center;
+  }
+  
+  .user_h2_container h2 {
+    color: white;
+    padding-top: 1rem;
+    padding-bottom: 2rem; 
+  }
+  
+  .form .form-control {
     background-color: #060515;
-    width: 100%; /* Робить контейнер розтягнутим по ширині */
-    text-align: center; /* Вирівнює текст по центру */
+    border: none;
+    caret-color: black;
+    color: white;
   }
-  
-  .user_h2_container h3 {
-    color: white; /* Встановлює білий колір для тексту h2 */
+
+  .form .form-control:focus {
+    background-color: #060515;
+    color: white; 
   }
+
+.form .form-control:-webkit-autofill {
+    background-color: #060515;
+    color: white; 
+    caret-color: black;
+  }
+
+.form .form-label {
+    color: white; /* Змініть колір тексту на бажаний */
+    font-size: 1.5rem; /* Змініть розмір шрифту на бажаний */
+  }
+
+.form .form-container{
+  justify-content: center;
+  padding: 0 7rem 3rem 7rem;
+}
+
+.button_user {
+  background-color: #897979;
   
+}
+
+.button_contr {
+  justify-content: center;
+  display: grid;
+  padding-top: 1rem;
+}

@@ -1,0 +1,54 @@
+.pay_for_page{
+    background: #060515;
+    padding: 1rem;
+    color: white;
+}
+
+.pay_for_page h1{
+    text-align: center;
+    color: white;
+}
+
+.all_container{
+    background: linear-gradient(to top, #080818, #1B1B29);
+    /* display: grid;
+    grid-template-rows: 1fr 1fr; */
+    border-radius: 15px 15px 15px 15px;
+    margin-left: 11.1rem;
+    margin-right: 11.1rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.user_h2_container{
+    justify-content: center;
+    display: grid;
+    grid-template-rows: 50% 50%;
+}
+
+.button_logout{
+    font-size: 1.3rem;
+}
+
+.button_book{
+    background-color: #897979;
+}
+
+.logout_button_container{
+    justify-content: center;
+    display: flex;
+    padding: 1rem;
+}
+.info_container{
+    padding: 1rem;
+}
+
+.user_part{
+    border-right: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.f_container{
+    padding-left: 1rem;
+}

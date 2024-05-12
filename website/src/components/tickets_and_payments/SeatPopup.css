@@ -35,6 +35,7 @@
 .seat-row {
   display: flex;
   justify-content: center;
+  padding-right: 1rem;
 }
 
 .number-row  {
@@ -63,4 +64,19 @@
 .button-cont{
   display: flex;
   justify-content: center;
+}
+
+.screen{
+  background-color: #514545;
+  width: auto;
+  height: 0.7rem;
+  margin-right: 2rem;
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+.seats{
+  width: 100%;
+  display: grid;
+  /* grid-template-columns: 40% 60% */
 }

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import '../../App.css';
+// import '../../App.css';
 import Footer from '../Footer';
 import { useLocation } from 'react-router-dom';
 import UserForm from '../tickets_and_payments/UserForm'; 
 import TicketInfo from '../tickets_and_payments/TicketInfo'; // Імпорт нового модуля
 import { Button } from 'react-bootstrap';
+import './PayForTicket.css'
 
 function PayForTicket() {
   const location = useLocation();
@@ -36,24 +37,33 @@ function PayForTicket() {
 
   return (
     <>
-      <br />
-      {loggedInUser ? (
-        <div className='about_page_container'>
+    <div className='pay_for_page'>
+      <h1>Купити квитки</h1>
+      <div className='all_container'>
+        <div className='user_part'>
+        {loggedInUser ? (
+        <div className='user_container'>
           <div className='user_h2_container'>
-            <h3>Дані користувача</h3>
+            <h2>Дані користувача</h2>          
+            <div className='user_data'>
+            <h3>Ім'я: {loggedInUser.name}</h3>
+            <h3>Email: {loggedInUser.email}</h3>
+            <div className='logout_button_container'><Button className='button_logout' variant="link" onClick={handleLogout}>
+            Змінити акаунт
+          </Button></div>
+            </div>
           </div>
-          <p>Ім'я: {loggedInUser.name}</p>
-          <p>Email: {loggedInUser.email}</p>
-          <Button variant="danger" onClick={handleLogout}>
-            Вийти
-          </Button>
-          <br />
         </div>
       ) : (
         <UserForm onLogin={handleLogin} />
       )}
-      <TicketInfo movieId={movieId} sessionId={sessionId} loggedInUser={loggedInUser} seats={seats} price={price} />
-      <Footer />
+        </div>
+        <div className='ticket_part'>
+        <TicketInfo movieId={movieId} sessionId={sessionId} loggedInUser={loggedInUser} seats={seats} price={price} />
+        </div>
+      </div>
+    </div>
+    <Footer />
     </>
   );
 }
