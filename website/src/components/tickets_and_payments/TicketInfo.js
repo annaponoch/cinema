@@ -112,7 +112,34 @@ function TicketInfo({ movieId, sessionId, loggedInUser, seats, price }) {
             Забронювати
           </Button></div>
           <PaymentModal show={showModal} handleClose={() => setShowModal(false)} handlePayment={() => {
-            // Оплата карткою онлайн
+             // Оплата карткою
+              axios.post('http://localhost:5555/transaction', {
+                movie_id: movieId,
+                session_id: sessionId,
+                user_id: loggedInUser._id,
+                user_email: loggedInUser.email,
+                booking_date: new Date(),
+                payment_method: 'card',
+                payed_uah: price,
+                booked_seats: seats.map(seat => `Ряд ${seat.rowIndex + 1} Місце ${seat.seatIndex + 1}`),
+              }).then(response => {
+                console.log('Transaction created:', response.data);
+                const transactionId = response.data._id;
+                navigate(`/ticket?seats=${encodeURIComponent(JSON.stringify(seats))}&totalPrice=${price}&sessionId=${sessionId}&movieId=${movie.title}&userEmail=${loggedInUser.email}&transactionId=${transactionId}`);
+              }).catch(error => {
+                console.error('Error creating transaction:', error);
+              });
+        
+              axios.put(`http://localhost:5555/session/seats/${sessionId}`,{
+                seats: seats
+              })
+              .then(response => {
+                setSessions(response.data);
+              })
+              .catch(error => {
+                console.error('Error changing session:', error);
+              });
+            
           }} />
         </>
       )}

@@ -2,7 +2,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #060515;
+    background-image: url('C:\Users\Anna\универ\Дипломна робота\cinema\website\public\images\posters.jpg');
+    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.7);
     padding: 1rem;
     color: white;
 }

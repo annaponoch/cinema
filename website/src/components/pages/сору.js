@@ -1,126 +1,144 @@
-import React from 'react';
-import QRCode from "react-qr-code";
-import Footer from '../Footer';
-import { useLocation } from 'react-router-dom';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Button, Form } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
-// Стилі для PDF
-const styles = {
-  container: {
-    borderRadius: 15},
-  
-  ticketContainer: {
-    display: 'flex',
-    background: '#1B1B29',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  qrCode: {
-    width: 150,
-    height: 150,
-    marginTop: 10
-  },
-  downloadButton: {
-    padding: 10,
-    backgroundColor: '#007bff',
-    color: '#ffffff',
-    borderRadius: 5,
-    textDecoration: 'none',
-    alignSelf: 'center',
-    marginTop: 20,
-    fontSize: 16,
-    cursor: 'pointer',
-    border: 'none'
-  }
-};
+import PaymentModal from './PaymentModal';
 
-const Ticket = () => {
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const seats = JSON.parse(searchParams.get('seats'));
-  const price = searchParams.get('totalPrice');
-  const sessionId = searchParams.get('sessionId');
-  const movieId = searchParams.get('movieId');
-  const transactionId = searchParams.get('transactionId');
-  const userEmail = searchParams.get('userEmail');
+function TicketInfo({ movieId, sessionId, loggedInUser, seats, price }) {
+  const [movie, setMovie] = useState(null);
+  const [sessions, setSessions] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState('cash');
+  const navigate = useNavigate();
+  // console.log('seats:', seats);
 
-  const handleDownloadPDF = () => {
-    const filename = 'ticket.pdf';
-    const input = document.getElementById('ticketContent');
-  
-    html2canvas(input, { scale: 1, scrollY: -window.scrollY })
-      .then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'mm', 'a6');
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = pdf.internal.pageSize.getHeight();
-        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-        pdf.save(filename);
+  useEffect(() => {
+    axios.get(`http://localhost:5555/movie/movie_id/${movieId}`)
+      .then(response => {
+        setMovie(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching movie:', error);
       });
+    
+    axios.get(`http://localhost:5555/session/${sessionId}`)
+      .then(response => {
+        setSessions(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching sessions:', error);
+      });
+      
+  }, [movieId, sessionId]);
+
+  const handleConfirmPayment = () => {
+    if (paymentMethod === 'online') {
+      setShowModal(true);
+    } else {
+      // Якщо обрано оплату готівкою, робимо запит на сервер і переходимо на нову сторінку
+      axios.post('http://localhost:5555/transaction', {
+        movie_id: movieId,
+        session_id: sessionId,
+        user_id: loggedInUser._id,
+        user_email: loggedInUser.email,
+        booking_date: new Date(),
+        payment_method: 'cash',
+        payed_uah: price,
+        booked_seats: seats.map(seat => `Ряд ${seat.rowIndex + 1} Місце ${seat.seatIndex + 1}`),
+      }).then(response => {
+        console.log('Transaction created:', response.data);
+        // navigate('/ticket'); 
+        const transactionId = response.data._id; // Отримання _id запису
+        navigate(`/ticket?seats=${encodeURIComponent(JSON.stringify(seats))}&totalPrice=${price}&sessionId=${sessionId}&movieId=${movieId}&transactionId=${transactionId}`);
+      }).catch(error => {
+        console.error('Error creating transaction:', error);
+      });
+
+      axios.put(`http://localhost:5555/session/seats/${sessionId}`,{
+        seats: seats
+      })
+      .then(response => {
+        setSessions(response.data);
+      })
+      .catch(error => {
+        console.error('Error changing session:', error);
+      });
+      
+    }
   };
 
   return (
-    <>
- 
-        <div className='pay_for_page'>
-          <div className='ticket'>
-        <div id="ticketContent" style={styles.container}>
-          <div style={styles.ticketContainer}>
-          <h1>Обрані квитки</h1>
-          <div className='ticket_info'>
-          {movieId && (
-              <>
-              <h3>Фільм:</h3>
-              <h4>{movieId}</h4>
-            </>
-          )}
-          {seats.length > 0 && (
-            <>
-              <h3>Заброньовані місця:</h3>
-              {seats.map((seat, index) => (
-                <h4 key={index}>{`(Ряд ${seat.rowIndex + 1}, Місце ${seat.seatIndex + 1})`}</h4>
-              ))}
-            </>
-          )}
-          {price && (
-            <>
-              <h3>Загальна вартість:</h3>
-              <h4>{price}</h4>
-            </>
-          )}
-          {sessionId && (
-            <>
-              <h3>Дата та час сеансу:</h3>
-              <h4>{sessionId}</h4>
-            </>
-          )}
-          {userEmail && (
-            <>
-              <h3>Електронна пошта:</h3>
-              <h4>{userEmail}</h4>
-            </>
-          )}
-          {transactionId && (
-            <>
-              <h3>Номер квитка:</h3>
-              <h4>{transactionId}</h4>
-            </>
-          )}
-            </div>
-            <div className='QR_cont'>
-              <QRCode value={transactionId} size={256} />
-              
-            </div>
-            
-          </div>
-          </div>
-          <div className='b_con'><button className='download_button' onClick={handleDownloadPDF}>Завантажити PDF</button></div>
-          </div>
-        </div>
-      <Footer />
-    </>
+    <div className='about_page_container'>
+      {/* Відображення інформації про фільм та квитки */}
+      {movie && (
+        <>
+          <h2>Обрані квитки</h2>
+          <h3>Movie: {movie.title}</h3>
+          <img src={movie.image_URL} alt={movie.title} />
+          <h3>Seats: {seats.map(seat => `Ряд ${seat.rowIndex + 1} Місце ${seat.seatIndex + 1}`).join(', ')}</h3>
+          <h3>Price: {price}</h3>
+          <h3>Session Date & Time: {new Date(sessions.date_time).toLocaleString()}</h3>
+        </>
+      )}
+      {(!loggedInUser) && (
+        <p>Будь ласка, увійдіть або зареєструйтеся, щоб продовжити</p>
+      )}
+      <br />
+      <Form>
+        <Form.Check
+          type="radio"
+          label="Оплатити в касі кінотеатру"
+          name="paymentMethod"
+          id="cashPayment"
+          checked={paymentMethod === 'cash'}
+          onChange={() => setPaymentMethod('cash')}
+        />
+        <Form.Check
+          type="radio"
+          label="Оплатити карткою онлайн"
+          name="paymentMethod"
+          id="onlinePayment"
+          checked={paymentMethod === 'online'}
+          onChange={() => setPaymentMethod('online')}
+        />
+      </Form>
+      <br />
+      <Button variant="dark" onClick={handleConfirmPayment}>
+        Забронювати
+      </Button>
+      <PaymentModal show={showModal} handleClose={() => setShowModal(false)} handlePayment={() => {
+        // Оплата карткою онлайн, викликається після введення даних картки в модальному вікні
+        axios.post('http://localhost:5555/transaction', {
+          movie_id: movieId,
+          session_id: sessionId,
+          user_id: loggedInUser._id,
+          user_email: loggedInUser.email,
+          booking_date: new Date(),
+          payment_method: 'online',
+          payed_uah: price,
+          booked_seats: seats.map(seat => `Ряд ${seat.rowIndex + 1} Місце ${seat.seatIndex + 1}`),
+        }).then(response => {
+          console.log('Transaction created:', response.data);
+          // navigate('/ticket'); 
+          const transactionId = response.data._id; // Отримання _id запису
+          navigate(`/ticket?seats=${encodeURIComponent(JSON.stringify(seats))}&totalPrice=${price}&sessionId=${sessionId}&movieId=${movieId}&transactionId=${transactionId}`);
+        }).catch(error => {
+          console.error('Error creating transaction:', error);
+        });
+
+        axios.put(`http://localhost:5555/session/seats/${sessionId}`,{
+          seats: seats
+        })
+        .then(response => {
+          setSessions(response.data);
+        })
+        .catch(error => {
+          console.error('Error changing session:', error);
+        });
+      }} />
+    </div>
   );
 }
 
-export default Ticket;
+export default TicketInfo;
