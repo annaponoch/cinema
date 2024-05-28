@@ -19,7 +19,6 @@ function SeatPopup({ seats, price, sessionId, movieId }) {
 
   const handlePayment = () => {
     const selectedSeatsString = JSON.stringify(selectedSeats);
-    // Перенаправлення на сторінку /pay разом з параметрами через URL
     navigate(`/pay?seats=${selectedSeatsString}&totalPrice=${totalPrice}&sessionId=${sessionId}&movieId=${movieId}`);
   };
  

@@ -40,7 +40,6 @@ function TicketInfo({ movieId, sessionId, loggedInUser, seats, price }) {
     if (paymentMethod === 'online') {
       setShowModal(true);
     } else {
-      // Оплата готівкою
       axios.post('http://localhost:5555/transaction', {
         movie_id: movieId,
         session_id: sessionId,
@@ -77,7 +76,6 @@ function TicketInfo({ movieId, sessionId, loggedInUser, seats, price }) {
         <div className='user_h2_container'><h2>Обрані квитки</h2></div>
         <div className='info_container'>
           <h3>Фільм: {movie.title}</h3>
-          {/* <img src={movie.image_URL} alt={movie.title} /> */}
           <h3>Місця: {seats.map(seat => `Ряд ${seat.rowIndex + 1} Місце ${seat.seatIndex + 1}`).join(', ')}</h3>
           <h3>До сплати: {price} гривень</h3>
           <h3>Дата та час сеансу: {new Date(sessions.date_time).toLocaleString()}</h3>
@@ -112,7 +110,6 @@ function TicketInfo({ movieId, sessionId, loggedInUser, seats, price }) {
             Забронювати
           </Button></div>
           <PaymentModal show={showModal} handleClose={() => setShowModal(false)} handlePayment={() => {
-             // Оплата карткою
               axios.post('http://localhost:5555/transaction', {
                 movie_id: movieId,
                 session_id: sessionId,
@@ -133,7 +130,7 @@ function TicketInfo({ movieId, sessionId, loggedInUser, seats, price }) {
               axios.put(`http://localhost:5555/session/seats/${sessionId}`,{
                 seats: seats
               })
-              .then(response => {
+              .then(response => { 
                 setSessions(response.data);
               })
               .catch(error => {

@@ -18,17 +18,17 @@ function UserForm({ onLogin, loggedInUser }) {
         const response = await axios.post(`http://localhost:5555/user`, { name, email, password });
         setSuccessMessage('Реєстрація успішна!');
         setErrorMessage('');
-        onLogin(response.data); // Передаємо дані користувача у батьківський компонент
+        onLogin(response.data); 
       } catch (error) {
         setSuccessMessage('');
         setErrorMessage('Помилка реєстрації: ' + error.response.data.message);
       }
     } else {
-      try {
+      try { 
         const response = await axios.post(`http://localhost:5555/user/login`, { email, password });
         setSuccessMessage('Авторизація успішна!');
         setErrorMessage('');
-        onLogin(response.data); // Передаємо дані користувача у батьківський компонент
+        onLogin(response.data); 
       } catch (error) {
         setSuccessMessage('');
         setErrorMessage('Помилка авторизації: ' + error.response.data.message);
@@ -37,7 +37,7 @@ function UserForm({ onLogin, loggedInUser }) {
   };
 
   const handleLogout = () => {
-    onLogin(null); // Передаємо null у батьківський компонент, щоб затерти дані про користувача
+    onLogin(null); 
   };
 
   return (

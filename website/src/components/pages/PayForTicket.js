@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-// import '../../App.css';
 import Footer from '../Footer';
 import { useLocation } from 'react-router-dom';
 import UserForm from '../tickets_and_payments/UserForm'; 
-import TicketInfo from '../tickets_and_payments/TicketInfo'; // Імпорт нового модуля
+import TicketInfo from '../tickets_and_payments/TicketInfo'; 
 import { Button } from 'react-bootstrap';
 import './PayForTicket.css'
 
@@ -17,7 +16,7 @@ function PayForTicket() {
     if (storedUser) {
       setLoggedInUser(JSON.parse(storedUser));
     }
-  }, []); // Додаємо пустий масив для запобігання безкінечного циклу
+  }, []); 
 
   const handleLogin = (id) => {
     setLoggedInUser(id);
@@ -29,7 +28,6 @@ function PayForTicket() {
     localStorage.removeItem('loggedInUser');
   };
 
-  // Отримання параметрів з URL
   const seats = JSON.parse(searchParams.get('seats'));
   const price = searchParams.get('totalPrice');
   const sessionId = searchParams.get('sessionId');

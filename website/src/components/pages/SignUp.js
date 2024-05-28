@@ -28,7 +28,6 @@ export default function SignUp() {
     axios.delete(`http://localhost:5555/user/${loggedInUser._id}`)
   .then(response => {
     console.log('User deleted successfully:', response.data);
-    // Виконайте додаткові дії за необхідності після успішного видалення користувача
   })
   .catch(error => {
     console.error('Error deleting user:', error);

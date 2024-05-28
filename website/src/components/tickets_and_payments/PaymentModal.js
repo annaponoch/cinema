@@ -8,7 +8,6 @@ const PaymentModal = ({ show, handleClose, handlePayment }) => {
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleConfirmPayment = () => {
-    // Валідація даних картки
     const cardNumberPattern = /^\d{16}$/;
     const expiryDatePattern = /^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$/;
     const cvvPattern = /^\d{3}$/;
@@ -21,7 +20,6 @@ const PaymentModal = ({ show, handleClose, handlePayment }) => {
       setErrorMessage('CVV має містити 3 цифри');
     } else {
       setErrorMessage('');
-      // Якщо дані введено правильно, викликаємо функцію handlePayment з введеними даними картки
       handlePayment();
     }
   };

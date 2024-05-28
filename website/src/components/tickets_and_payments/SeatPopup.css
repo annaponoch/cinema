@@ -5,7 +5,7 @@
   border: none;
   border-radius: 5px;
   font-size: 16px;
-  cursor: pointer; /* Додаємо курсор вказівника для вільних місць */
+  cursor: pointer; 
 }
 
 .seat-free {
@@ -19,12 +19,12 @@
 }
 
 .seat-selected {
-  background-color: #419EE1; /* Додаємо колір для обраних місць */
+  background-color: #419EE1; 
   color: white;
 }
 
 .seat:disabled {
-  cursor: not-allowed; /* Зміна курсора для зайнятих місць */
+  cursor: not-allowed;
 }
 
 
@@ -78,5 +78,4 @@
 .seats{
   width: 100%;
   display: grid;
-  /* grid-template-columns: 40% 60% */
 }

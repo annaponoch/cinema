@@ -10,7 +10,6 @@ function TicketInfo({ movieId, sessionId, loggedInUser, seats, price }) {
   const [showModal, setShowModal] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('cash');
   const navigate = useNavigate();
-  // console.log('seats:', seats);
 
   useEffect(() => {
     axios.get(`http://localhost:5555/movie/movie_id/${movieId}`)
@@ -34,7 +33,6 @@ function TicketInfo({ movieId, sessionId, loggedInUser, seats, price }) {
 
   return (
     <div className='about_page_container'>
-      {/* Відображення інформації про фільм та квитки */}
       {movie && (
         <>
           <h2>Обрані квитки</h2>

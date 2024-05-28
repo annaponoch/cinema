@@ -13,7 +13,7 @@ function UncontrolledExample() {
         />
         <Carousel.Caption>
           <h3>Разом нас багато</h3>
-          {/* <p>Допомагаємо українцям гуманітарною.</p> */}
+  
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
@@ -26,7 +26,6 @@ function UncontrolledExample() {
 
         <Carousel.Caption>
           <h3>Нас не подолати</h3>
-          {/* <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p> */}
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
@@ -39,9 +38,6 @@ function UncontrolledExample() {
 
         <Carousel.Caption>
           <h3>Разом нас багато</h3>
-          {/* <p>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-          </p> */}
         </Carousel.Caption>
       </Carousel.Item>
     </Carousel>

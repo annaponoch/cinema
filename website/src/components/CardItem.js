@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 function CardItem(props) {
   return (
-    // <div className='cards__item'>
         <Link to={`/session/${props.movieId}/${props.date}`} className='cards__item'>
           <div className='cards__item__pic-wrap'>
             <img
@@ -20,7 +19,6 @@ function CardItem(props) {
             </div>
           </div>
         </Link>
-    // </div>
   );
 }
 

@@ -42,10 +42,9 @@ h4 {
 
 
 .image{
-    max-width: 450px; /* Максимальна ширина */
-    /* max-height: 200px; Максимальна висота */
-    width: 100%; /* Ширина на 100% для адаптації до батьківського контейнера */
-    height: auto; /* Автоматична висота, щоб зберегти пропорції */
+    max-width: 450px; 
+    width: 100%; 
+    height: auto;
     object-fit: cover;
     padding: 2rem;
 }
@@ -55,8 +54,6 @@ h4 {
 	width:auto;
     display:inline-block;
 	height:auto;
-    /* margin-left: 1rem; */
-    /* margin-right: 1rem; */
     margin-top: 1rem;
     margin-bottom: 1rem;
     padding: 1.5rem;
@@ -90,7 +87,6 @@ h4 {
 
 /* стилі для модалу */
 
-/* Перезапис стилів Bootstrap */
 .modal-content {
     background-color: #998888;
   }

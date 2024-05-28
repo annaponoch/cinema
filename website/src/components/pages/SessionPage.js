@@ -14,7 +14,6 @@ function SessionPage() {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    // Отримання даних про фільм
     axios.get(`http://localhost:5555/movie/movie_id/${movieId}`)
       .then(response => {
         setMovie(response.data);
@@ -22,8 +21,6 @@ function SessionPage() {
       .catch(error => {
         console.error('Error fetching movie:', error);
       });
-
-    // Отримання даних про сеанси
     axios.get(`http://localhost:5555/session/movie/${movieId}/${date}`)
       .then(response => {
         setSessions(response.data);
@@ -35,7 +32,7 @@ function SessionPage() {
 
   const handleSessionClick = (session) => {
     setSelectedSession(session);
-    setShowModal(true); // Відкриття модального вікна при натисканні на кнопку сеансу
+    setShowModal(true); 
   };
 
   const getFormattedDate = (dateString) => {
@@ -102,7 +99,7 @@ function SessionPage() {
             seats={JSON.parse(selectedSession.seats[0])} 
             price={selectedSession.price} 
             sessionId={selectedSession._id}
-            movieId={movie.movie_id} // Додаємо ідентифікатор сеансу
+            movieId={movie.movie_id} 
           />
           )}
         </Modal.Body>

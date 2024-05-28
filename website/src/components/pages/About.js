@@ -9,13 +9,7 @@ export default function About() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Додайте код для відправлення форми або інші дії тут
-    // Наприклад, відправка даних на сервер
-
-    // Після відправки показати алерт
     setShowAlert(true);
-
-    // Очистити дані форми (за необхідності)
     event.target.reset();
   };
 

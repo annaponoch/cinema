@@ -6,7 +6,6 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import axios from 'axios';
 
-// Стилі для PDF
 
 const Ticket = () => {
   const location = useLocation();
@@ -39,7 +38,7 @@ const Ticket = () => {
   
     html2canvas(input, {
       scale: 2,
-      backgroundColor: '#1B1B29' // Встановлюємо бажаний колір фону
+      backgroundColor: '#1B1B29' 
     }).then((canvas) => {
       const pdf = new jsPDF('p', 'mm', 'a6');
       const imgData = canvas.toDataURL('image/png');

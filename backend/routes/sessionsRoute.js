@@ -46,26 +46,7 @@ sessionsRoute.post('/', async (request, response)=> {
     }
  });
 
-//  sessionsRoute.get('/filter/:movieId/:selectedDate', async (req, res) => {
-//   try {
-//     const { movieId, selectedDate } = req.params;
-//     const sessions = await Session.aggregate([
-//       {
-//         $match: {
-//           movie_id: movieId,
-//           date_time: {
-//             $gte: new Date(selectedDate),
-//             $lt: new Date(new Date(selectedDate).setDate(new Date(selectedDate).getDate() + 1))
-//           }
-//         }
-//       }
-//     ]);
-//     res.json(sessions);
-//   } catch (error) {
-//     console.error('Error fetching sessions:', error);
-//     res.status(500).json({ message: 'Error fetching sessions' });
-//   }
-// });
+
 
 sessionsRoute.get('/movie/:movieId/:selectedDate', async (req, res) => {
   try {
@@ -140,23 +121,19 @@ sessionsRoute.get('/date/:selectedDate', async (req, res) => {
       const { id } = request.params;
       const { seats } = request.body;
   
-      // Отримання існуючого запису сеансу
       const session = await Session.findById(id);
   
       if (!session) {
         return response.status(404).json({ message: 'Session not found' });
       }
-  
-      // Отримання масиву місць з існуючого запису сеансу
+
       let currentSeats = JSON.parse(session.seats);
   
-      // Зміна стану місць за вказаними індексами
       seats.forEach(seat => {
         const { rowIndex, seatIndex } = seat;
         currentSeats[rowIndex][seatIndex] = 'occupied';
       });
   
-      // Оновлення запису сеансу з оновленим масивом місць
       await Session.findByIdAndUpdate(id, { seats: JSON.stringify(currentSeats) });
   
       return response.status(200).json({ message: 'Session updated successfully' });

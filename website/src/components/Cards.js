@@ -21,7 +21,7 @@ function Cards() {
                   image: movie.image_URL,
                   dates: dates,
                   format: movie.format,
-                  movieId: movie.movie_id // Додано movieId в об'єкт фільму
+                  movieId: movie.movie_id 
                 };
               }
               return null;
@@ -47,7 +47,7 @@ function Cards() {
     setSelectedDate(date);
   };
 
-  const uniqueDates = Array.from(new Set(movies.flatMap(movie => movie.dates))).sort(); // Додано сортування
+  const uniqueDates = Array.from(new Set(movies.flatMap(movie => movie.dates))).sort(); 
 
   const filteredMovies = movies.filter((movie) => movie.dates.includes(selectedDate));
 
@@ -79,9 +79,9 @@ function Cards() {
               src={movie.image}
               heading={movie.title}
               text={movie.title}
-              movieId={movie.movieId} // Передача movieId у CardItem
+              movieId={movie.movieId} 
               date={selectedDate}
-              format={movie.format}  // Передача вибраної дати у CardItem
+              format={movie.format}  
             />
           ))}
         </div>
