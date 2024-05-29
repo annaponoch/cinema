@@ -1,4 +1,4 @@
-.session_page{
+.session_page {
     background: #060515;
     padding: 1rem;
     color: white;
@@ -7,97 +7,226 @@
 h4 {
     color: white;
     font-weight: 200;
-    
-  }
-
-.movie_container{
-    background: linear-gradient(to top, #080818, #1B1B29);
-    /* display: grid;
-    grid-template-rows: 1fr 1fr; */
-    border-radius: 15px 15px 15px 15px;
-    margin-left: 11.1rem;
-    margin-right: 11.1rem;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    display: flex;
-    flex-flow: column;
+    /* font-size: 2rem; */
 }
 
-.first_row{
+.movie_container {
+    background: linear-gradient(to top, #080818, #1B1B29);
+    border-radius: 15px;
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    padding: 1vw;
+}
+
+.first_row {
     width: 100%;
     display: grid;
-    grid-template-columns: 40% 60%;
+    grid-template-columns: 35% 65%;
+    gap: 1rem;
 }
 
 .details {
-    padding-top: 2rem;
+    padding-top: 0;
     text-decoration: none;
-    max-height: 450px;
+    display: grid;
+    margin-right: 1vw;
+}
+
+.details h2 {
+    font-size: 3vw;
+    color: white;
 
 }
-.details h2{
-    font-size: 2.7rem;
+
+.details h3 {
+    font-size: 2rem;
     color: white;
 }
 
+.image {
+    max-width: 450px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 0.5rem;
+}
 
-.image{
-    max-width: 450px; 
-    width: 100%; 
+.image-container {
+    height: 100%;
+    width: 100%;
     height: auto;
-    object-fit: cover;
-    padding: 2rem;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+.form_cont {
+    padding: 0;
 }
 
 .format {
     background-color: #222133;
-	width:auto;
-    display:inline-block;
-	height:auto;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    padding: 1.5rem;
+    width: auto;
+    display: inline-block;
+    height: auto;
+    margin-top: 1vw;
+    margin-bottom: 1vw;
+    padding: 1.5vw;
 }
 
 .format h3 {
-    font-size: 2.5rem;
+    font-size: 2.5vw;
     color: white;
 }
 
-
-.button_time{
+.button_time {
     background-color: #897979;
-    padding: 8px 20px;
-    font-size: 1.5rem;
-    margin-right: 1rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    padding: 1vw 1vw;
+    margin-right: 1.5vw;
+    margin-top: 1.5vw;
+    margin-bottom: 1.5vw;
     color: white;
     outline: none;
     border: none;
     cursor: pointer;
 }
 
-.description_text{
-    white-space: pre-line;
-    padding: 0 3%;
-    text-align: justify;
+.button_time h3 {
+    font-size: 2vw;
 }
 
+.description_text {
+    white-space: pre-line;
+    text-align: justify;
+    margin-bottom: 2vw;
+}
 
-/* стилі для модалу */
+.description_text h3{
+    font-size: 2rem;
+}
 
 .modal-content {
     background-color: #998888;
-  }
+}
 
 .modal-header {
     color: white;
-    
-  }
+}
 
-.loading{
+.loading {
     background: #060515;
     width: 100rem;
-	height:100rem;
+    height: 100rem;
+}
+
+.second_row{
+    padding: 0 2%;
+}
+
+.video-responsive {
+    overflow: hidden;
+    padding-bottom: 58.25%;
+    position: relative;
+    height: 0;
+  }
+  
+  .video-responsive iframe {
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+  }
+
+
+/* Media Queries */
+/* 
+@media screen and (max-width: 1077px) {
+    .details h2 {
+        font-size: 2.2vw;
+    }
+    .format h3 {
+        font-size: 2vw;
+    }
+    .button_time {
+        font-size: 1.2vw;
+        padding: 0.6vw 1.5vw;
+    }
+    .details h3, .details h4 {
+        font-size: 1.4vw;
+    }
+} */
+
+@media screen and (max-width: 992px) {
+    .image {
+        max-width: 100%;
+        padding: 0.2vw;
+    }
+
+    .details h2 {
+        font-size: 4vw;
+    }
+    .details h3, .details h4 {
+        font-size: 2.5vw;
+    }
+    .description_text h3, .description_text h4{
+        font-size: 2.5vw;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .movie_container {
+        margin: 1rem;
+        padding: 1rem;
+    }
+
+    .first_row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .details {
+        padding-top: 1rem;
+    }
+
+    .details h2 {
+        font-size: 2rem;
+    }
+    .details h4 {
+        font-size: 1rem;
+    }
+    .format {
+        /* width: 100%; */
+        padding: 1rem;
+    }
+
+    .format h3 {
+        font-size: 1.5rem;
+    }
+
+    .button_time {
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+    }
+
+    .button_time h3 {
+        font-size: 1rem;
+    }
+    .description_text{
+        padding: 0;
+    }
+    .description_text h3 {
+        font-size: 1.5rem;
+        
+    }
+
+    .description_text h4 {
+        font-size: 1rem;
+    }
+
+    .details h3 {
+        font-size: 1.5rem;
+    }
 }

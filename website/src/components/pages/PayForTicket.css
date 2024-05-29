@@ -12,8 +12,8 @@
 .all_container{
     background: linear-gradient(to top, #080818, #1B1B29);
     border-radius: 15px 15px 15px 15px;
-    margin-left: 11.1rem;
-    margin-right: 11.1rem;
+    margin-left: 10.1vw;
+    margin-right: 10.1vw;
     margin-top: 2rem;
     margin-bottom: 2rem;
     display: grid;
@@ -27,7 +27,7 @@
 }
 
 .button_logout{
-    font-size: 1.3rem;
+    font-size: 2vw;
 }
 
 .button_book{
@@ -42,6 +42,15 @@
 .info_container{
     padding: 1rem;
 }
+.info_container h3{
+    font-size: 2vw;
+}
+
+.info_container p{
+    font-size: 1.5vw;
+    font-weight: 200;
+}
+
 
 .user_part{
     border-right: 3px solid rgba(255, 255, 255, 0.4);
@@ -112,4 +121,96 @@
     align-items: center;
     margin-bottom: 1rem;
   }
+
+
+/* Media Queries */
+
+/* @media screen and (max-width: 1077px) {
+    .pay_for_page h1, .ticket_page h1 {
+        font-size: 4vw;
+    }
+    .button_logout, .button_book, .download_button {
+        font-size: 1.5vw;
+    }
+    .ticket_info, .QR_cont {
+        padding-left: 2vw;
+        padding-right: 2vw;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .all_container, .ticket {
+        margin: 2rem 1rem;
+    }
+    .all_container {
+        grid-template-columns: 1fr;
+    }
+    .ticketContent {
+        grid-template-columns: 1fr;
+    }
+    .user_part {
+        border: none;
+    }
+} */
+@media screen and (max-width: 1000px) {
+    .all_container, .ticket {
+        margin: 1rem 0.5rem;
+        /* padding: 1rem; */
+    }
+
+    .pay_for_page h1, .ticket_page h1 {
+        font-size: 5vw;
+    }
+    .button_logout, .button_book, .download_button {
+        font-size: 3vw;
+        padding: 1vw 2vw;
+    }
+    .ticket_info, .QR_cont {
+        padding: 1vw;
+    }
+
+    .info_container h3{
+        font-size: 2.5vw;
+        font-weight: 300;
+    }
+    
+    .info_container p{
+        font-size: 2.5vw;
+        font-weight: 200;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .all_container, .ticket {
+        margin: 1rem 0.5rem;
+        /* padding: 1rem; */
+    }
+    .all_container, .ticketContent {
+        grid-template-columns: 1fr;
+    }
+    .pay_for_page h1, .ticket_page h1 {
+        font-size: 5vw;
+    }
+    .button_logout, .button_book, .download_button {
+        font-size: 3vw;
+        padding: 1vw 2vw;
+    }
+    .ticket_info, .QR_cont {
+        padding: 1vw;
+    }
+    .user_part{
+        border-right: 0;
+        border-bottom: 3px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .info_container h3{
+        font-size: 4vw;
+        font-weight: 300;
+    }
+    
+    .info_container p{
+        font-size: 4vw;
+        font-weight: 200;
+    }
+}
   

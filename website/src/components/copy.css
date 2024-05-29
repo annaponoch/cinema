@@ -1,0 +1,103 @@
+.session_page{
+  background: #060515;
+  padding: 1rem;
+  color: white;
+}
+
+h4 {
+  color: white;
+  font-weight: 200;
+  
+}
+
+.movie_container{
+  background: linear-gradient(to top, #080818, #1B1B29);
+  /* display: grid;
+  grid-template-rows: 1fr 1fr; */
+  border-radius: 15px 15px 15px 15px;
+  margin-left: 11.1rem;
+  margin-right: 11.1rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-flow: column;
+}
+
+.first_row{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 40% 60%;
+}
+
+.details {
+  padding-top: 2rem;
+  text-decoration: none;
+  max-height: 450px;
+
+}
+.details h2{
+  font-size: 2.7rem;
+  color: white;
+}
+
+
+.image{
+  max-width: 450px; 
+  width: 100%; 
+  height: auto;
+  object-fit: cover;
+  padding: 2rem;
+}
+
+.format {
+  background-color: #222133;
+width:auto;
+  display:inline-block;
+height:auto;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 1.5rem;
+}
+
+.format h3 {
+  font-size: 2.5rem;
+  color: white;
+}
+
+
+.button_time{
+  background-color: #897979;
+  padding: 8px 20px;
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  color: white;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+.description_text{
+  white-space: pre-line;
+  padding: 0 3%;
+  text-align: justify;
+}
+
+
+/* стилі для модалу */
+
+.modal-content {
+  background-color: #998888;
+}
+
+.modal-header {
+  color: white;
+  
+}
+
+.loading{
+  background: #060515;
+  width: 100rem;
+height:100rem;
+}

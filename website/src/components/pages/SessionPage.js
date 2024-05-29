@@ -51,18 +51,19 @@ function SessionPage() {
     <div className='session_page'>
       <div className='movie_container'>
        {/* FOR IMG AND DETAILS */}
-        <div className='first_row'>
-          <img
+        
+        <div className='first_row'> 
+        <div className='image_container'><img
               className='image'
               alt={movie.title}
               src={movie.image_URL}
             />
-
+        </div>
           <div className='details'>
           <h2>{movie.title}</h2>
-          <div className='format'>
+          <div className='form_cont'><div className='format'>
           <h3>{movie.format}</h3>
-          </div>
+          </div></div>
           <h3>{getFormattedDate(date)}</h3>
           <div className='buttons_container'>
           {sessions.map(session => (
@@ -83,6 +84,16 @@ function SessionPage() {
           <div className='description_text'>
             <h3>Опис фільму</h3>
             <h4>{movie.description}</h4>
+          </div>
+          <div className="video-responsive">
+            <iframe
+              width="853"
+              height="480"
+              src={movie.yt_link} 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              title="Embedded youtube"
+            />
           </div>
         </div>
       </div>
