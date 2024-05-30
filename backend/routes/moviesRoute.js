@@ -3,6 +3,29 @@ import { Movie } from '../models/movieModel.js';
 
 const moviesRoute = express.Router();
 
+import multer from 'multer';
+import path from 'path';
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'C:\\Users\\Anna\\универ\\Дипломна робота\\cinema\\website\\public\\images');
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage: storage });
+
+moviesRoute.post('/upload', upload.single('image'), (req, res) => {
+  try {
+    res.status(200).send({ imageURL: `/images/${req.file.filename}` });
+  } catch (error) {
+    res.status(500).send({ message: 'Error uploading image', error: error.message });
+  }
+});
+
+
 
 moviesRoute.post('/', async (request, response) => {
   try {

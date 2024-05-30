@@ -3,38 +3,38 @@ import { Session } from '../models/sessionModel.js';
 
 const sessionsRoute = express.Router();
 
-sessionsRoute.post('/', async (request, response)=> {
-    try {
-        if (
-            !request.body.movie_id||
-            !request.body.date_time||
-            !request.body.price          
-        ) {
-            return response.status(400).send({
-                message: 'Not all fields are filled'
-            });
-        }
-        const seatsArray = JSON.stringify([
+sessionsRoute.post('/', async (request, response) => {
+  try {
+      if (
+          !request.body.movie_id ||
+          !request.body.date_time ||
+          !request.body.price
+      ) {
+          return response.status(400).send({
+              message: 'Not all fields are filled'
+          });
+      }
+      const seatsArray = JSON.stringify([
           ['free', 'free', 'free', 'free', 'free'],
           ['free', 'free', 'free', 'free', 'free'],
           ['free', 'free', 'free', 'free', 'free'],
           ['free', 'free', 'free', 'free', 'free'],
           ['free', 'free', 'free', 'free', 'free']
-        ]);
-        const newSession = {
-          movie_id: request.body.movie_id,
+      ]);
+      const newSession = {
+          movie_id: parseInt(request.body.movie_id), // Corrected parsing to integer
           date_time: request.body.date_time,
           price: request.body.price,
           seats: seatsArray
-                   
-        };
-        const session = await Session.create(newSession);
-        return response.status(201).send(session);
-    } catch (error) {
-        console.log(error.message);
-        response.status().send({message: error.message});
-    }
- });
+
+      };
+      const session = await Session.create(newSession);
+      return response.status(201).send(session);
+  } catch (error) {
+      console.log(error.message);
+      response.status(500).send({ message: error.message });
+  }
+});
 
  sessionsRoute.get('/', async (request, response)=> {
     try {
