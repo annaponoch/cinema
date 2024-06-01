@@ -16,7 +16,7 @@ function AdminForm({ onLogin, loggedInUser }) {
       const response = await axios.post(`http://localhost:5555/user/login`, { email, password });
       if (email === 'admin_zironka@gmail.com') {
         onLogin(response.data);
-        history('/admin/sessions'); // Перенаправлення на сторінку редагування сеансів для адміністратора
+        history('/admin/movie'); // Перенаправлення на сторінку редагування сеансів для адміністратора
       } else {
         setErrorMessage('Ви не маєте доступу до цієї сторінки.');
       }

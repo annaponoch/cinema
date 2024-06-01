@@ -22,7 +22,8 @@
 }
 
 .date-container h2 {
-  margin: 0; /* Вирівнювання на мобільних пристроях */
+  margin: 0;
+  border: none; 
 }
 
 .date-select {
