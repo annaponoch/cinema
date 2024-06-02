@@ -21,10 +21,19 @@
 }
 
 .user_h2_container{
-    justify-content: center;
+    align-items: center;
     display: grid;
-    grid-template-rows: 50% 50%;
+    /* grid-template-rows: 50% 50%; */
 }
+
+.user_data{
+    margin-top: 2vw;
+}
+
+.user_h2_container h3{
+    font-size: 2vw;
+}
+
 
 .button_logout{
     font-size: 2vw;
@@ -42,6 +51,7 @@
 .info_container{
     padding: 1rem;
 }
+
 .info_container h3{
     font-size: 2vw;
 }
@@ -50,6 +60,40 @@
     font-size: 1.5vw;
     font-weight: 200;
 }
+
+
+.f_container {
+    padding-left: 1rem;
+  }
+  
+  .f_container .form-check-label {
+    font-size: 1.4vw; /* Змінює розмір шрифту лейблів */
+  }
+  
+  .f_container .form-check-input {
+    width: 1vw; /* Ширина радіо-кнопки */
+    height: 1vw; /* Висота радіо-кнопки */
+    border-radius: 50%; /* Робить радіо-кнопки круглими */
+    appearance: none; /* Прибирає стандартний стиль браузера */
+    border: 2px solid #ccc; /* Додає рамку */
+    background-color: #fff; /* Задає білий фон */
+    position: relative;
+    margin-right: 10px;
+  }
+  
+  .f_container .form-check-input:checked::before {
+    content: '';
+    width: 0.75rem;
+    height: 0.75rem;
+    background-color: #007bff; /* Колір всередині круглої радіо-кнопки */
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+
 
 
 .user_part{
@@ -123,35 +167,7 @@
   }
 
 
-/* Media Queries */
 
-/* @media screen and (max-width: 1077px) {
-    .pay_for_page h1, .ticket_page h1 {
-        font-size: 4vw;
-    }
-    .button_logout, .button_book, .download_button {
-        font-size: 1.5vw;
-    }
-    .ticket_info, .QR_cont {
-        padding-left: 2vw;
-        padding-right: 2vw;
-    }
-}
-
-@media screen and (max-width: 992px) {
-    .all_container, .ticket {
-        margin: 2rem 1rem;
-    }
-    .all_container {
-        grid-template-columns: 1fr;
-    }
-    .ticketContent {
-        grid-template-columns: 1fr;
-    }
-    .user_part {
-        border: none;
-    }
-} */
 @media screen and (max-width: 1000px) {
     .all_container, .ticket {
         margin: 1rem 0.5rem;
@@ -174,17 +190,39 @@
         font-weight: 300;
     }
     
+    .user_h2_container h3{
+        font-size: 2.5vw;
+        font-weight: 300;
+    }   
+
+    .f_container .form-check-label {
+        font-size: 2.5vw;
+        font-weight: 300; 
+    }
+
+
     .info_container p{
         font-size: 2.5vw;
         font-weight: 200;
     }
 }
 
-@media screen and (max-width: 500px) {
-    .all_container, .ticket {
+@media screen and (max-width: 600px) {
+    .all_container {
         margin: 1rem 0.5rem;
         /* padding: 1rem; */
     }
+
+    .ticket {
+        margin: 1rem 0.5rem;
+        padding: 1rem;
+        min-width: 20rem;
+    }
+
+    .ticket_page {
+        font-size: 5vw;
+    }
+
     .all_container, .ticketContent {
         grid-template-columns: 1fr;
     }
@@ -208,6 +246,22 @@
         font-weight: 300;
     }
     
+    .f_container .form-check-label {
+        font-size: 4vw;
+        font-weight: 300;
+    }
+
+    .user_h2_container h3{
+        font-size: 4vw;
+        font-weight: 300;
+    }   
+
+    
+    .user_h2_container h2{
+        font-size: 5vw;
+        /* font-weight: 300; */
+    } 
+
     .info_container p{
         font-size: 4vw;
         font-weight: 200;

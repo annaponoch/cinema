@@ -18,7 +18,7 @@
 }
 
 .date-buttons {
-  margin: 0; /* Вирівнювання на мобільних пристроях */
+  margin: 0; 
 }
 
 .date-container h2 {
@@ -44,7 +44,7 @@
 }
 
 .cards__items {
-  margin: 0; /* Вирівнювання на мобільних пристроях */
+  margin: 0; 
   background-color: #060515;
   margin-right: 11.1rem;
   margin-left: 11.1rem;
@@ -83,26 +83,26 @@
 
 @media screen and (max-width: 960px) {
   .cards h1 {
-    margin-left: 0; /* Вирівнювання на мобільних пристроях */
+    margin-left: 0; 
   }
 
 
   .date-container {
-    padding-left: 2.5rem; /* Вирівнювання на мобільних пристроях */
+    padding-left: 2.5rem; 
   }
 
   .date-buttons {
-    margin-right: 0; /* Вирівнювання на мобільних пристроях */
+    margin-right: 0; 
   }
 
   .date-container h2 {
     margin-left: 0;
-    padding: 0; /* Вирівнювання на мобільних пристроях */
+    padding: 0; 
   }
 
   .cards__items {
-    margin-left: 1rem; /* Вирівнювання на мобільних пристроях */
-    margin-right: 1rem; /* Вирівнювання на мобільних пристроях */
+    margin-left: 1rem; 
+    margin-right: 1rem; 
   }
   .format h3 {
     font-size: 1rem;
@@ -112,19 +112,19 @@
 
 @media screen and (max-width: 768px) {
   .cards__item {
-    grid-template-columns: 1fr; /* Зміна на одну колонку для мобільних пристроїв */
+    grid-template-columns: 1fr; 
   }
 
   .cards__item__text {
-    font-size: 2rem; /* Зменшення розміру шрифту на мобільних пристроях */
+    font-size: 2rem; 
   }
 
   .cards__item__img {
-    padding: 1rem; /* Зменшення відступів на мобільних пристроях */
+    padding: 1rem; 
   }
 
   .cards__item__info {
-    margin-left: 1rem; /* Зменшення відступів на мобільних пристроях */
+    margin-left: 1rem; 
     padding-top: 0;
     
   }
@@ -138,6 +138,6 @@
   }
 
   .date-select {
-    font-size: 20px; /* Зменшення розміру шрифту на мобільних пристроях */
+    font-size: 20px; 
   }
 }

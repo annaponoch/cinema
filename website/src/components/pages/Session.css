@@ -141,25 +141,9 @@ h4 {
   }
 
 
-/* Media Queries */
-/* 
-@media screen and (max-width: 1077px) {
-    .details h2 {
-        font-size: 2.2vw;
-    }
-    .format h3 {
-        font-size: 2vw;
-    }
-    .button_time {
-        font-size: 1.2vw;
-        padding: 0.6vw 1.5vw;
-    }
-    .details h3, .details h4 {
-        font-size: 1.4vw;
-    }
-} */
 
-@media screen and (max-width: 992px) {
+
+@media screen and (max-width: 1000px) {
     .image {
         max-width: 100%;
         padding: 0.2vw;
@@ -179,58 +163,31 @@ h4 {
 @media screen and (max-width: 600px) {
     .movie_container {
         margin: 0;
-        padding: 1rem;
-    }
-
+        padding: 2vw;}
     .first_row {
         grid-template-columns: 1fr;
-        gap: 0;
-    }
-
+        gap: 0;}
     .details {
-        padding-top: 1rem;
-    }
-
+        padding-top: 1vw;}
     .details h2 {
-        font-size: 2rem;
-    }
+        font-size: 7vw;}
     .details h4 {
-        font-size: 1rem;
-    }
+        font-size: 6vw;}
     .format {
-        /* width: 100%; */
-        padding: 1rem;
-    }
-
-    .format h3 {
-        font-size: 1.5rem;
-    }
-
+        padding: 1rem;}
     .button_time {
-        font-size: 1rem;
-        padding: 0.5rem 1rem;
-    }
-
-    .button_time h3 {
-        font-size: 1rem;
-    }
+        font-size: 6vw;
+        padding: 0.5rem 1rem;}
     .description_text{
         padding: 0;
-        margin:0;
-    }
+        margin:0;}
     .description_text h3 {
-        font-size: 1.5rem;
-        
-    }
-
+        font-size: 6vw;}
     .second_row {
-        padding: 0;
-    }
+        padding: 0;}
     .description_text h4 {
-        font-size: 1rem;
-    }
-
+        font-size: 6vw;
+        text-align: left;}
     .details h3 {
-        font-size: 1.5rem;
-    }
+        font-size: 6vw;}
 }

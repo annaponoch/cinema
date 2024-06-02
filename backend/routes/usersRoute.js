@@ -3,8 +3,6 @@ import bcrypt from 'bcrypt';
 import { User } from '../models/userModel.js';
 
 const usersRoute = express.Router();
-
-// Кількість раундів для генерації salt
 const saltRounds = 10;
 
 usersRoute.post('/', async (request, response) => {
@@ -15,8 +13,6 @@ usersRoute.post('/', async (request, response) => {
               message: 'Not all fields are filled'
           });
       }
-
-      // Перевірка наявності користувача з такою ж поштою
       const existingUser = await User.findOne({ email });
       if (existingUser) {
           return response.status(400).send({
@@ -24,10 +20,7 @@ usersRoute.post('/', async (request, response) => {
           });
       }
 
-      // Хешування пароля
       const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-      // Створення нового користувача з хешованим паролем
       const newUser = {
           name,
           email,
@@ -73,7 +66,6 @@ usersRoute.post('/login', async (request, response) => {
         return response.status(404).json({ message: 'User not found' });
       }
 
-      // Перевірка пароля
       const isPasswordMatch = await bcrypt.compare(password, user.password);
   
       if (!isPasswordMatch) {

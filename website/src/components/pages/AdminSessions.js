@@ -69,9 +69,10 @@ const AdminSessions = () => {
     setSelectedSession(session);
     setFormState({
       movie_id: session.movie_id || '',
-      date_time: session.date_time || '',
+      date_time: new Date(session.date_time).toISOString().slice(0, -1), 
       price: session.price || ''
     });
+    window.scrollTo(0, 0); 
   };
 
   const handleDelete = async () => {
@@ -83,6 +84,7 @@ const AdminSessions = () => {
     } catch (error) {
       console.error('Помилка видалення сеансу:', error);
     }
+    window.scrollTo(0, 0); 
   };
 
   const resetForm = () => {
@@ -107,6 +109,8 @@ const AdminSessions = () => {
     setShowModal(false);
     setSessionToDelete(null);
   };
+
+  const initialDateTimeValue = selectedSession ? new Date(selectedSession.date_time).toISOString().slice(0, -1) : ''; // виправлення
 
   return (
     <div className="admin_page">
@@ -135,7 +139,7 @@ const AdminSessions = () => {
               type="datetime-local"
               name="date_time"
               placeholder="Дата та час"
-              value={formState.date_time}
+              value={formState.date_time || initialDateTimeValue}
               onChange={handleChange}
               required
             />
@@ -178,11 +182,16 @@ const AdminSessions = () => {
         </div>
       </div>
 
+
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>Підтвердження видалення</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Ви точно бажаєте видалити сеанс?</Modal.Body>
+        <Modal.Body>
+          Ви точно бажаєте видалити сеанс фільму "{movies.find(movie => movie.movie_id === selectedSession?.movie_id)?.title || selectedSession?.movie_id}"?
+          <br />
+          Дата та час: {selectedSession ? new Date(selectedSession.date_time).toLocaleString() : ''}
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseModal}>
             Відмінити

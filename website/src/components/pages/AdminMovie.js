@@ -89,6 +89,7 @@ const AdminMovie = () => {
     if (imageInputRef.current) {
       imageInputRef.current.value = '';
     }
+    window.scrollTo(0, 0); 
   };
 
   const handleDelete = async () => {
@@ -101,6 +102,7 @@ const AdminMovie = () => {
     } catch (error) {
       console.error('Помилка видалення фільму:', error);
     }
+    window.scrollTo(0, 0); 
   };
 
   const resetForm = () => {
@@ -235,7 +237,7 @@ const AdminMovie = () => {
         <Modal.Header closeButton>
           <Modal.Title>Підтвердження видалення</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Ви точно бажаєте видалити фільм?</Modal.Body>
+        <Modal.Body>Ви точно бажаєте видалити фільм "{movies.find(movie => movie._id === movieToDelete)?.title}"?</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseModal}>
             Відмінити
@@ -244,7 +246,7 @@ const AdminMovie = () => {
             Видалити
           </Button>
         </Modal.Footer>
-      </Modal>
+    </Modal>
     </div>
   );
 };
