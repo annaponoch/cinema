@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './AdminPanel.css';
 import { useNavigate } from 'react-router-dom'; 
+import { Modal, Button } from 'react-bootstrap';
+import './AdminPanel.css';
 
 const AdminSessions = () => {
   const [sessions, setSessions] = useState([]);
@@ -12,7 +13,11 @@ const AdminSessions = () => {
     date_time: '',
     price: ''
   });
+  const [showModal, setShowModal] = useState(false);
+  const [sessionToDelete, setSessionToDelete] = useState(null);
+
   const history = useNavigate();
+
   useEffect(() => {
     fetchSessions();
     fetchMovies();
@@ -69,9 +74,11 @@ const AdminSessions = () => {
     });
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:5555/session/${id}`);
+      await axios.delete(`http://localhost:5555/session/${sessionToDelete}`);
+      setShowModal(false);
+      setSessionToDelete(null);
       fetchSessions();
     } catch (error) {
       console.error('Помилка видалення сеансу:', error);
@@ -88,74 +95,103 @@ const AdminSessions = () => {
   };
 
   const handleEditSessions = () => {
-    history('/admin/movie'); // Використовуємо історію для переходу на вказаний URL
+    history('/admin/movie');
   };
 
+  const handleShowModal = (id) => {
+    setSessionToDelete(id);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSessionToDelete(null);
+  };
 
   return (
     <div className="admin_page">
-    <div className="butt_cont"><button className="butt2" onClick={handleEditSessions}>Редагувати фільми</button></div>
-    <div className="admin_page_1"> <div className="admin-panel">
-      <h1>Панель адміністратора</h1>
-      <h2>Сеанси</h2>
-      <form onSubmit={handleSubmit}>
-        <select
-          name="movie_id"
-          value={formState.movie_id}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Виберіть фільм</option>
-          {movies.map((movie) => (
-            <option key={movie._id} value={movie.movie_id}>
-              {movie.title}
-            </option>
-          ))}
-        </select>
-        <input
-          type="datetime-local"
-          name="date_time"
-          placeholder="Дата та час"
-          value={formState.date_time}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="number"
-          name="price"
-          placeholder="Ціна"
-          value={formState.price}
-          onChange={handleChange}
-          required
-        />
-        <div className="butt"><button type="submit">{selectedSession ? 'Оновити сеанс' : 'Додати сеанс'}</button></div>
-        {selectedSession && <div className="butt"><button type="button" onClick={resetForm}>Очистити</button></div>}
-      </form>
-      <table>
-        <thead>
-          <tr>
-            <th>Назва фільму</th>
-            <th>Дата та час</th>
-            <th>Ціна</th>
-            <th>Дії</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sessions.map((session) => (
-            <tr key={session._id}>
-              <td>{movies.find((movie) => movie.movie_id === session.movie_id)?.title || session.movie_id}</td>
-              <td>{new Date(session.date_time).toLocaleString()}</td>
-              <td>{session.price}</td>
-              <td className="actions">
-                <button onClick={() => handleEdit(session)}>Редагувати</button>
-                <button onClick={() => handleDelete(session._id)}>Видалити</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-    </div>
+      <div className="butt_cont">
+        <button className="butt2" onClick={handleEditSessions}>Редагувати фільми</button>
+      </div>
+      <div className="admin_page_1">
+        <div className="admin-panel">
+          <h1>Панель адміністратора</h1>
+          <h2>Сеанси</h2>
+          <form onSubmit={handleSubmit}>
+            <select
+              name="movie_id"
+              value={formState.movie_id}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Виберіть фільм</option>
+              {movies.map((movie) => (
+                <option key={movie._id} value={movie.movie_id}>
+                  {movie.title}
+                </option>
+              ))}
+            </select>
+            <input
+              type="datetime-local"
+              name="date_time"
+              placeholder="Дата та час"
+              value={formState.date_time}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="number"
+              name="price"
+              placeholder="Ціна"
+              value={formState.price}
+              onChange={handleChange}
+              required
+            />
+            <div className="butt">
+              <button type="submit">{selectedSession ? 'Оновити сеанс' : 'Додати сеанс'}</button>
+            </div>
+            {selectedSession && <div className="butt"><button type="button" onClick={resetForm}>Очистити</button></div>}
+          </form>
+          <table>
+            <thead>
+              <tr>
+                <th>Назва фільму</th>
+                <th>Дата та час</th>
+                <th>Ціна</th>
+                <th>Дії</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sessions.map((session) => (
+                <tr key={session._id}>
+                  <td>{movies.find((movie) => movie.movie_id === session.movie_id)?.title || session.movie_id}</td>
+                  <td>{new Date(session.date_time).toLocaleString()}</td>
+                  <td>{session.price}</td>
+                  <td className="actions">
+                    <button onClick={() => handleEdit(session)}>Редагувати</button>
+                    <button onClick={() => handleShowModal(session._id)}>Видалити</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Підтвердження видалення</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Ви точно бажаєте видалити сеанс?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Відмінити
+          </Button>
+          <Button variant="danger" onClick={handleDelete}>
+            Видалити
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

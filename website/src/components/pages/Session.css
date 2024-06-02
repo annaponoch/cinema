@@ -178,7 +178,7 @@ h4 {
 
 @media screen and (max-width: 600px) {
     .movie_container {
-        margin: 1rem;
+        margin: 0;
         padding: 1rem;
     }
 
@@ -216,12 +216,16 @@ h4 {
     }
     .description_text{
         padding: 0;
+        margin:0;
     }
     .description_text h3 {
         font-size: 1.5rem;
         
     }
 
+    .second_row {
+        padding: 0;
+    }
     .description_text h4 {
         font-size: 1rem;
     }

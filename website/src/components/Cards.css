@@ -34,7 +34,7 @@
   font-size: 25px;
   margin: 4px 2px;
   cursor: pointer;
-  padding: 10px 20px;
+  padding: 1vw 2vw;
   transition: background-color 0.3s;
 }
 
@@ -96,7 +96,8 @@
   }
 
   .date-container h2 {
-    margin-left: 0; /* Вирівнювання на мобільних пристроях */
+    margin-left: 0;
+    padding: 0; /* Вирівнювання на мобільних пристроях */
   }
 
   .cards__items {
