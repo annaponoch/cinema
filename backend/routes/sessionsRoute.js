@@ -22,7 +22,7 @@ sessionsRoute.post('/', async (request, response) => {
           ['free', 'free', 'free', 'free', 'free']
       ]);
       const newSession = {
-          movie_id: parseInt(request.body.movie_id), // Corrected parsing to integer
+          movie_id: parseInt(request.body.movie_id), 
           date_time: request.body.date_time,
           price: request.body.price,
           seats: seatsArray

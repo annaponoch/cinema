@@ -1,5 +1,3 @@
-// Cards.js
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Cards.css';
@@ -47,7 +45,7 @@ function Cards() {
   useEffect(() => {
     const dates = getUniqueDates(movies, selectedGenre);
     setUniqueDates(dates);
-    setSelectedDate(dates[0] || ''); // Оновлення обраної дати при зміні жанру
+    setSelectedDate(dates[0] || ''); 
   }, [movies, selectedGenre]);
 
   const getUniqueDates = (movies, selectedGenre) => {
@@ -66,7 +64,7 @@ function Cards() {
 
   const handleGenreChange = (genre) => {
     setSelectedGenre(genre);
-    setSelectedDate(''); // Очищаємо вибрану дату при зміні жанру
+    setSelectedDate('');
   };
 
   const filteredMovies = movies.filter((movie) => {

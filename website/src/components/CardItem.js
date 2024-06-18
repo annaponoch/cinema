@@ -1,5 +1,3 @@
-// CardItem.js
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -14,7 +12,7 @@ function CardItem(props) {
         />
       </div>
       <div className='cards__item__info'>
-        <h5 className='cards__item__text'>{props.heading}</h5> {/* Використовуємо props.heading замість props.text */}
+        <h5 className='cards__item__text'>{props.heading}</h5> 
         <div className='format'>
           <h3>{props.format}</h3>
         </div>

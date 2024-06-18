@@ -85,7 +85,7 @@ const AdminMovie = () => {
       director: movie.director || '',
       yt_link: movie.yt_link || ''
     });
-    setImageFile(null); // Clear the image file input
+    setImageFile(null); 
     if (imageInputRef.current) {
       imageInputRef.current.value = '';
     }
@@ -98,7 +98,7 @@ const AdminMovie = () => {
       setShowModal(false);
       setMovieToDelete(null);
       fetchMovies();
-      resetForm(); // Reset form after deletion
+      resetForm();
     } catch (error) {
       console.error('Помилка видалення фільму:', error);
     }

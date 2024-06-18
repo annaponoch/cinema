@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
 import './AdminPanel.css';
 
@@ -26,7 +26,15 @@ const AdminSessions = () => {
   const fetchSessions = async () => {
     try {
       const response = await axios.get('http://localhost:5555/session');
-      setSessions(response.data);
+      const sortedSessions = response.data.sort((a, b) => {
+        const dateA = new Date(a.date_time).toLocaleDateString();
+        const dateB = new Date(b.date_time).toLocaleDateString();
+        if (dateA === dateB) {
+          return String(a.movie_id).localeCompare(String(b.movie_id));
+        }
+        return new Date(a.date_time) - new Date(b.date_time);
+      });
+      setSessions(sortedSessions);
     } catch (error) {
       console.error('Помилка отримання сеансів:', error);
     }
@@ -49,7 +57,7 @@ const AdminSessions = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      let date_time = new Date(formState.date_time).toISOString();
+      const date_time = new Date(formState.date_time).toISOString();
       const newSession = { ...formState, date_time };
 
       if (selectedSession) {
@@ -66,13 +74,19 @@ const AdminSessions = () => {
   };
 
   const handleEdit = (session) => {
+
+    const localDateTime = new Date(session.date_time).toLocaleString("sv-SE", {
+      timeZone: "UTC",
+      hour12: false
+    }).replace(" ", "T");
+
     setSelectedSession(session);
     setFormState({
       movie_id: session.movie_id || '',
-      date_time: new Date(session.date_time).toISOString().slice(0, -1), 
+      date_time: localDateTime,
       price: session.price || ''
     });
-    window.scrollTo(0, 0); 
+    window.scrollTo(0, 0);
   };
 
   const handleDelete = async () => {
@@ -84,7 +98,6 @@ const AdminSessions = () => {
     } catch (error) {
       console.error('Помилка видалення сеансу:', error);
     }
-    window.scrollTo(0, 0); 
   };
 
   const resetForm = () => {
@@ -100,8 +113,9 @@ const AdminSessions = () => {
     history('/admin/movie');
   };
 
-  const handleShowModal = (id) => {
-    setSessionToDelete(id);
+  const handleShowModal = (session) => {
+    setSelectedSession(session);
+    setSessionToDelete(session._id);
     setShowModal(true);
   };
 
@@ -109,8 +123,6 @@ const AdminSessions = () => {
     setShowModal(false);
     setSessionToDelete(null);
   };
-
-  const initialDateTimeValue = selectedSession ? new Date(selectedSession.date_time).toISOString().slice(0, -1) : ''; // виправлення
 
   return (
     <div className="admin_page">
@@ -139,7 +151,7 @@ const AdminSessions = () => {
               type="datetime-local"
               name="date_time"
               placeholder="Дата та час"
-              value={formState.date_time || initialDateTimeValue}
+              value={formState.date_time}
               onChange={handleChange}
               required
             />
@@ -169,11 +181,11 @@ const AdminSessions = () => {
               {sessions.map((session) => (
                 <tr key={session._id}>
                   <td>{movies.find((movie) => movie.movie_id === session.movie_id)?.title || session.movie_id}</td>
-                  <td>{new Date(session.date_time).toLocaleString()}</td>
+                  <td>{new Date(session.date_time).toLocaleString("uk-UA", { timeZone: "UTC" })}</td>
                   <td>{session.price}</td>
                   <td className="actions">
                     <button onClick={() => handleEdit(session)}>Редагувати</button>
-                    <button onClick={() => handleShowModal(session._id)}>Видалити</button>
+                    <button onClick={() => handleShowModal(session)}>Видалити</button>
                   </td>
                 </tr>
               ))}
@@ -182,15 +194,14 @@ const AdminSessions = () => {
         </div>
       </div>
 
-
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>Підтвердження видалення</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Ви точно бажаєте видалити сеанс фільму "{movies.find(movie => movie.movie_id === selectedSession?.movie_id)?.title || selectedSession?.movie_id}"?
+          Ви точно бажаєте видалити сеанс фільму "{movies.find(movie => movie.movie_id === selectedSession?.movie_id)?.title}"?
           <br />
-          Дата та час: {selectedSession ? new Date(selectedSession.date_time).toLocaleString() : ''}
+          Дата та час: {selectedSession ? `${new Date(selectedSession.date_time).toLocaleString("uk-UA", { timeZone: "UTC" })}` : ''}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseModal}>

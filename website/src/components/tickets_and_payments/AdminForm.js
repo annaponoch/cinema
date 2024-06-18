@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Імпорт бібліотеки для роботи з історією переходів
+import { useNavigate } from 'react-router-dom'; 
 import './UserForm.css';
 
 function AdminForm({ onLogin, loggedInUser }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const history = useNavigate(); // Ініціалізація об'єкта історії для переходів
+  const history = useNavigate(); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,7 +16,7 @@ function AdminForm({ onLogin, loggedInUser }) {
       const response = await axios.post(`http://localhost:5555/user/login`, { email, password });
       if (email === 'admin_zironka@gmail.com') {
         onLogin(response.data);
-        history('/admin/movie'); // Перенаправлення на сторінку редагування сеансів для адміністратора
+        history('/admin/movie'); 
       } else {
         setErrorMessage('Ви не маєте доступу до цієї сторінки.');
       }

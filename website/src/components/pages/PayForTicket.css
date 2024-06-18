@@ -67,16 +67,16 @@
   }
   
   .f_container .form-check-label {
-    font-size: 1.4vw; /* Змінює розмір шрифту лейблів */
+    font-size: 1.4vw; 
   }
   
   .f_container .form-check-input {
-    width: 1vw; /* Ширина радіо-кнопки */
-    height: 1vw; /* Висота радіо-кнопки */
-    border-radius: 50%; /* Робить радіо-кнопки круглими */
-    appearance: none; /* Прибирає стандартний стиль браузера */
-    border: 2px solid #ccc; /* Додає рамку */
-    background-color: #fff; /* Задає білий фон */
+    width: 1vw; 
+    height: 1vw; 
+    border-radius: 50%; 
+    appearance: none; 
+    border: 2px solid #ccc; 
+    background-color: #fff; 
     position: relative;
     margin-right: 10px;
   }
@@ -85,7 +85,7 @@
     content: '';
     width: 0.75rem;
     height: 0.75rem;
-    background-color: #007bff; /* Колір всередині круглої радіо-кнопки */
+    background-color: #007bff;
     border-radius: 50%;
     position: absolute;
     top: 50%;

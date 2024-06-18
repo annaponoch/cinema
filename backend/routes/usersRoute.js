@@ -89,7 +89,7 @@ usersRoute.put('/:id', async (request, response) => {
 
       const { id } = request.params;
 
-      // Хешування нового пароля
+   
       const hashedPassword = await bcrypt.hash(password, saltRounds);
 
       const result = await User.findByIdAndUpdate(id, {
