@@ -57,8 +57,10 @@ const AdminSessions = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const date_time = new Date(formState.date_time).toISOString();
-      const newSession = { ...formState, date_time };
+      // Конвертуємо локальний час у UTC
+      const localDateTime = new Date(formState.date_time);
+      const utcDateTime = new Date(localDateTime.getTime() - localDateTime.getTimezoneOffset() * 60000).toISOString();
+      const newSession = { ...formState, date_time: utcDateTime };
 
       if (selectedSession) {
         await axios.put(`http://localhost:5555/session/${selectedSession._id}`, newSession);
@@ -74,12 +76,8 @@ const AdminSessions = () => {
   };
 
   const handleEdit = (session) => {
-
-    const localDateTime = new Date(session.date_time).toLocaleString("sv-SE", {
-      timeZone: "UTC",
-      hour12: false
-    }).replace(" ", "T");
-
+    // Перетворюємо дату й час у локальний формат для відображення в формі
+    const localDateTime = new Date(session.date_time).toISOString().slice(0, 16);
     setSelectedSession(session);
     setFormState({
       movie_id: session.movie_id || '',
